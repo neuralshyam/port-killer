@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/neuralshyam/port-killer.git"
+    "url": "https://github.com/neuralshyam/kport.git"
   },
   "keywords": [
     "kport",
@@ -32,8 +32,8 @@
   "author": "Shyam Charan Das <neuralshyam@gmail.com>",
   "license": "MIT OR Apache-2.0",
   "bugs": {
-    "url": "https://github.com/neuralshyam/port-killer/issues"
+    "url": "https://github.com/neuralshyam/kport/issues"
   },
-  "homepage": "https://neuralshyam.github.io/port-killer/"
+  "homepage": "https://neuralshyam.github.io/kport/"
 }
 

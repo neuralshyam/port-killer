@@ -5,7 +5,7 @@ const path = require('path');
 const https = require('https');
 const { execSync } = require('child_process');
 
-const REPO = 'neuralshyam/port-killer';
+const REPO = 'neuralshyam/kport';
 const VERSION = 'v0.2.0';
 
 function getTarget() {

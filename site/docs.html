@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation · port-killer (kport)</title>
-  <meta name="description" content="Comprehensive documentation, CLI reference, configuration guides, and architecture internals for port-killer." />
+  <title>Documentation · kport (Rust Port Hunter)</title>
+  <meta name="description" content="Comprehensive documentation, CLI reference, configuration guides, and architecture internals for kport." />
   
   <!-- OpenGraph & Social Media SEO -->
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://neuralshyam.github.io/port-killer/docs.html" />
-  <meta property="og:title" content="Documentation · port-killer (kport)" />
-  <meta property="og:description" content="Comprehensive CLI reference, configuration guides, and architecture internals for port-killer." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/neuralshyam/port-killer/main/site/assets/logo.png" />
+  <meta property="og:url" content="https://neuralshyam.github.io/kport/docs.html" />
+  <meta property="og:title" content="Documentation · kport" />
+  <meta property="og:description" content="Comprehensive CLI reference, configuration guides, and architecture internals for kport." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Documentation · port-killer (kport)" />
-  <meta name="twitter:description" content="Comprehensive CLI reference, configuration guides, and architecture internals for port-killer." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/neuralshyam/port-killer/main/site/assets/logo.png" />
+  <meta name="twitter:title" content="Documentation · kport" />
+  <meta name="twitter:description" content="Comprehensive CLI reference, configuration guides, and architecture internals for kport." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
 
   <!-- Structured Data / JSON-LD for Google Knowledge Graph & TechArticle Entity -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "port-killer (kport) Documentation & CLI Reference",
-    "description": "Comprehensive reference manual, installation guide, and architectural doctrine for port-killer.",
-    "url": "https://neuralshyam.github.io/port-killer/docs.html",
+    "headline": "kport Documentation & CLI Reference",
+    "description": "Comprehensive reference manual, installation guide, and architectural doctrine for kport.",
+    "url": "https://neuralshyam.github.io/kport/docs.html",
     "author": {
       "@type": "Person",
       "name": "Shyam Charan Das",
@@ -138,9 +138,9 @@
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-6">
         <a href="index.html" class="flex items-center gap-2.5">
-          <img src="assets/logo-128.png" alt="port-killer logo" class="w-7 h-7 object-contain">
+          <img src="assets/logo-128.png" alt="kport logo" class="w-7 h-7 object-contain">
           <span class="font-extrabold text-xl tracking-tight text-deno-on-surface">
-            port-killer <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">Docs</span>
+            kport <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">Docs</span>
           </span>
         </a>
 
@@ -154,7 +154,7 @@
         <a href="index.html" class="text-sm font-medium text-deno-muted hover:text-black transition-colors">
           Overview
         </a>
-        <a href="https://github.com/neuralshyam/port-killer" target="_blank" 
+        <a href="https://github.com/neuralshyam/kport" target="_blank" 
            class="h-[36px] px-3.5 rounded-full bg-[#2D3136] text-deno-neutral hover:bg-[#3D4248] transition-all flex items-center gap-2 text-xs font-medium">
           <i data-lucide="github" class="w-3.5 h-3.5"></i>
           <span>GitHub</span>
@@ -228,10 +228,10 @@
           Overview
         </div>
         <h1 class="text-3xl sm:text-4xl font-extrabold tracking-headLg text-deno-on-surface">
-          Introduction to port-killer
+          Introduction to kport
         </h1>
         <p class="text-deno-muted text-base leading-relaxed">
-          <code>port-killer</code> (aliased as <code>kport</code>) is a standalone, single-binary network port inspector and process termination utility written in Rust. It was built to eliminate the tedious cycles of running <code>lsof -i :3000</code>, parsing process IDs manually, and invoking <code>kill -9</code>.
+          <code>kport</code> (or <code>port-killer</code>) is a standalone, single-binary network port inspector and process termination utility written in Rust. It was built to eliminate the tedious cycles of running <code>lsof -i :3000</code>, parsing process IDs manually, and invoking <code>kill -9</code>.
         </p>
 
         <div class="p-4 bg-deno-surface border border-deno-border rounded-md text-sm text-deno-muted space-y-2">
@@ -250,35 +250,35 @@
       <section id="installation" class="space-y-4 border-t border-deno-border pt-10">
         <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Installation</h2>
         <p class="text-deno-muted text-sm leading-relaxed">
-          <code>port-killer</code> is distributed across all major package managers:
+          <code>kport</code> is distributed across all major package managers:
         </p>
 
         <div class="space-y-4">
           <div>
             <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Universal Shell Script (Linux & macOS)</h3>
-            <pre><code>curl -sSf https://raw.githubusercontent.com/neuralshyam/port-killer/main/install.sh | sh</code></pre>
+            <pre><code>curl -sSf https://raw.githubusercontent.com/neuralshyam/kport/main/install.sh | sh</code></pre>
           </div>
 
           <div>
-            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Cargo (Rust Registry)</h3>
-            <pre><code>cargo install port-killer</code></pre>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Cargo (Rust Crates.io)</h3>
+            <pre><code>cargo install kport</code></pre>
           </div>
 
           <div>
             <h3 class="font-semibold text-sm text-deno-on-surface mb-1">NPM / Bun (Zero-Install Execution)</h3>
-            <pre><code>bunx port-killer 3000
+            <pre><code>bunx kport 3000
 # or globally
-bun add -g port-killer</code></pre>
+bun add -g kport</code></pre>
           </div>
 
           <div>
             <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Homebrew (macOS / Linux)</h3>
-            <pre><code>brew install shyam/tap/kport</code></pre>
+            <pre><code>brew install neuralshyam/tap/kport</code></pre>
           </div>
 
           <div>
             <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Arch Linux AUR</h3>
-            <pre><code>yay -S port-killer-bin</code></pre>
+            <pre><code>yay -S kport-bin</code></pre>
           </div>
         </div>
       </section>
@@ -465,7 +465,7 @@ kport reset</code></pre>
       <section id="kernel-internals" class="space-y-4 border-t border-deno-border pt-10">
         <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Kernel Socket Architecture & Safety</h2>
         <p class="text-deno-muted text-sm leading-relaxed">
-          <code>port-killer</code> avoids the heavy latency of spawning shell pipelines like <code>lsof</code> or <code>netstat</code> by directly parsing native kernel structures:
+          <code>kport</code> avoids the heavy latency of spawning shell pipelines like <code>lsof</code> or <code>netstat</code> by directly parsing native kernel structures:
         </p>
 
         <ul class="list-disc pl-5 space-y-2 text-sm text-deno-muted">
@@ -484,8 +484,8 @@ kport reset</code></pre>
   <footer class="bg-deno-surface border-t border-deno-border py-12 px-6 mt-20">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-deno-muted">
       <div class="flex items-center gap-3">
-        <img src="assets/logo-128.png" alt="port-killer logo" class="w-6 h-6 rounded object-cover">
-        <span class="font-bold text-deno-on-surface">port-killer</span>
+        <img src="assets/logo-128.png" alt="kport logo" class="w-6 h-6 rounded object-cover">
+        <span class="font-bold text-deno-on-surface">kport</span>
         <span>· MIT / Apache-2.0 License</span>
       </div>
 
@@ -495,8 +495,8 @@ kport reset</code></pre>
 
       <div class="flex items-center gap-6">
         <a href="index.html" class="hover:text-black transition-colors">Overview</a>
-        <a href="https://github.com/neuralshyam/port-killer" target="_blank" class="hover:text-black transition-colors">GitHub</a>
-        <a href="https://crates.io/crates/port-killer" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
+        <a href="https://github.com/neuralshyam/kport" target="_blank" class="hover:text-black transition-colors">GitHub</a>
+        <a href="https://crates.io/crates/kport" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
       </div>
     </div>
   </footer>

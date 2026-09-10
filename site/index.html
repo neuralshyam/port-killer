@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>port-killer (kport) · The Intelligent Port Hunter & Process Slayer</title>
+  <title>kport · The Intelligent Port Hunter & Process Slayer (Rust)</title>
   <meta name="description" content="A blazing-fast, cross-platform CLI & TUI in Rust to inspect, probe, and slay network port conflicts in sub-milliseconds." />
   
   <!-- OpenGraph & Social Media SEO -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://neuralshyam.github.io/port-killer/" />
-  <meta property="og:title" content="port-killer (kport) · Fast Network Port Hunter & Process Slayer" />
+  <meta property="og:url" content="https://neuralshyam.github.io/kport/" />
+  <meta property="og:title" content="kport · Fast Network Port Hunter & Process Slayer" />
   <meta property="og:description" content="Never run kill -9 $(lsof -t -i:3000) again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/neuralshyam/port-killer/main/site/assets/logo.png" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="port-killer (kport) · Fast Network Port Hunter & Process Slayer" />
+  <meta name="twitter:title" content="kport · Fast Network Port Hunter & Process Slayer" />
   <meta name="twitter:description" content="Never run kill -9 $(lsof -t -i:3000) again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/neuralshyam/port-killer/main/site/assets/logo.png" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
 
   <!-- Structured Data / JSON-LD for Google Knowledge Graph & Software Entity -->
   <script type="application/ld+json">
@@ -24,16 +24,16 @@
     "@graph": [
       {
         "@type": "SoftwareApplication",
-        "@id": "https://neuralshyam.github.io/port-killer/#software",
-        "name": "port-killer",
-        "alternateName": "kport",
+        "@id": "https://neuralshyam.github.io/kport/#software",
+        "name": "kport",
+        "alternateName": "port-killer",
         "description": "An ultra-fast CLI & interactive TUI written in Rust to inspect, probe, and slay processes occupying network ports in sub-milliseconds.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Linux, macOS, Windows",
         "softwareVersion": "0.2.0",
         "license": "https://opensource.org/licenses/MIT",
-        "url": "https://neuralshyam.github.io/port-killer/",
-        "downloadUrl": "https://github.com/neuralshyam/port-killer/releases/latest",
+        "url": "https://neuralshyam.github.io/kport/",
+        "downloadUrl": "https://github.com/neuralshyam/kport/releases/latest",
         "author": {
           "@type": "Person",
           "@id": "https://shyamcharan.pages.dev/#person",
@@ -151,9 +151,9 @@
   <header class="sticky top-0 z-50 bg-deno-neutral/90 backdrop-blur-md border-b border-deno-border">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2.5">
-        <img src="assets/logo-128.png" alt="port-killer logo" class="w-7 h-7 object-contain">
+        <img src="assets/logo-128.png" alt="kport logo" class="w-7 h-7 object-contain">
         <span class="font-extrabold text-xl tracking-tight text-deno-on-surface">
-          port-killer <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">kport v0.2.0</span>
+          kport <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">v0.2.0</span>
         </span>
       </a>
 
@@ -166,7 +166,7 @@
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="https://github.com/neuralshyam/port-killer" target="_blank" 
+        <a href="https://github.com/neuralshyam/kport" target="_blank" 
            class="h-[38px] px-4 rounded-full bg-[#2D3136] text-deno-neutral hover:bg-[#3D4248] transition-all flex items-center gap-2 text-sm font-medium">
           <i data-lucide="github" class="w-4 h-4"></i>
           <span>GitHub</span>
@@ -208,7 +208,7 @@
           <i data-lucide="terminal" class="w-4 h-4"></i>
           <span>Get Started</span>
         </a>
-        <a href="https://github.com/neuralshyam/port-killer" target="_blank"
+        <a href="https://github.com/neuralshyam/kport" target="_blank"
            class="h-[46px] px-6 rounded-full bg-[#2D3136] text-deno-neutral font-medium text-base flex items-center gap-2 hover:bg-[#3C4249] transition-all">
           <i data-lucide="github" class="w-4 h-4"></i>
           <span>View Source on GitHub</span>
@@ -344,7 +344,7 @@
         <div class="flex items-center justify-between p-4 bg-[#0F141C] text-deno-neutral rounded-md font-mono text-sm mt-2">
           <div class="flex items-center gap-3 overflow-x-auto">
             <span class="text-deno-primary select-none">$</span>
-            <span id="install-cmd" class="text-white select-all">bunx port-killer 3000</span>
+            <span id="install-cmd" class="text-white select-all">bunx kport 3000</span>
           </div>
 
           <button onclick="copyInstallCmd()" class="px-3 py-1.5 rounded-md bg-[#252E3B] text-deno-secondary hover:bg-deno-primary hover:text-deno-tertiary transition-all text-xs font-semibold flex items-center gap-1.5">
@@ -558,8 +558,8 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-deno-muted">
       
       <div class="flex items-center gap-3">
-        <img src="assets/logo-128.png" alt="port-killer logo" class="w-6 h-6 rounded object-cover">
-        <span class="font-bold text-deno-on-surface">port-killer</span>
+        <img src="assets/logo-128.png" alt="kport logo" class="w-6 h-6 rounded object-cover">
+        <span class="font-bold text-deno-on-surface">kport</span>
         <span>· Released under MIT / Apache-2.0</span>
       </div>
 
@@ -568,9 +568,9 @@
       </div>
 
       <div class="flex items-center gap-6">
-        <a href="https://crates.io/crates/port-killer" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
-        <a href="https://github.com/neuralshyam/port-killer" target="_blank" class="hover:text-black transition-colors">GitHub</a>
-        <a href="https://github.com/neuralshyam/port-killer/issues" target="_blank" class="hover:text-black transition-colors">Issues</a>
+        <a href="https://crates.io/crates/kport" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
+        <a href="https://github.com/neuralshyam/kport" target="_blank" class="hover:text-black transition-colors">GitHub</a>
+        <a href="https://github.com/neuralshyam/kport/issues" target="_blank" class="hover:text-black transition-colors">Issues</a>
       </div>
 
     </div>
@@ -612,11 +612,11 @@
 
     // Package Manager Install Bar
     const installCommands = {
-      bunx: 'bunx port-killer 3000',
-      cargo: 'cargo install port-killer',
-      brew: 'brew install shyam/tap/kport',
-      aur: 'yay -S port-killer-bin',
-      curl: 'curl -sSf https://raw.githubusercontent.com/neuralshyam/port-killer/main/install.sh | sh',
+      bunx: 'bunx kport 3000',
+      cargo: 'cargo install kport',
+      brew: 'brew install neuralshyam/tap/kport',
+      aur: 'yay -S kport-bin',
+      curl: 'curl -sSf https://raw.githubusercontent.com/neuralshyam/kport/main/install.sh | sh',
       scoop: 'scoop install kport',
     };
 

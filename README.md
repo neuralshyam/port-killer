@@ -7,8 +7,8 @@
 ### *The lightning-fast, intelligent port hunter & process slayer for modern developers.*
 
 [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-8a2be2.svg?style=for-the-badge)](https://github.com/neuralshyam/port-killer)
-[![CI](https://img.shields.io/github/actions/workflow/status/neuralshyam/port-killer/ci.yml?branch=main&style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/neuralshyam/port-killer/actions)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-8a2be2.svg?style=for-the-badge)](https://github.com/neuralshyam/kport)
+[![CI](https://img.shields.io/github/actions/workflow/status/neuralshyam/kport/ci.yml?branch=main&style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/neuralshyam/kport/actions)
 
 <br />
 
@@ -76,20 +76,26 @@
 
 ### 1. Universal One-Line Installer (Linux & macOS)
 ```bash
-curl -sSf https://raw.githubusercontent.com/neuralshyam/port-killer/main/install.sh | sh
+curl -sSf https://raw.githubusercontent.com/neuralshyam/kport/main/install.sh | sh
 ```
 
-### 2. Via Cargo (From Source / Git)
+### 2. Via Cargo (From Crates.io)
 ```bash
-cargo install --git https://github.com/neuralshyam/port-killer.git
+cargo install kport
 ```
 
-### 3. Build from Source
+### 3. Quick Run via Bun / NPM (Zero Install)
 ```bash
-git clone https://github.com/neuralshyam/port-killer.git
-cd port-killer
+bunx kport 3000
+# or npx kport 3000
+```
+
+### 4. Build from Source
+```bash
+git clone https://github.com/neuralshyam/kport.git
+cd kport
 cargo build --release
-sudo cp target/release/port-killer /usr/local/bin/kport
+sudo cp target/release/kport /usr/local/bin/kport
 ```
 
 ---
@@ -231,8 +237,8 @@ Contributions, issues, and feature requests are warmly welcomed!
 
 ```bash
 # Clone the repository
-git clone https://github.com/neuralshyam/port-killer.git
-cd port-killer
+git clone https://github.com/neuralshyam/kport.git
+cd kport
 
 # Run tests
 cargo test

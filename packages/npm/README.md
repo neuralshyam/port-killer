@@ -4,7 +4,7 @@
 
 [![npm](https://img.shields.io/npm/v/kport?color=66C2FF&style=flat-square)](https://www.npmjs.com/package/kport)
 [![Crates.io](https://img.shields.io/crates/v/kport?color=66FFB2&style=flat-square)](https://crates.io/crates/kport)
-[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg?style=flat-square)](https://github.com/neuralshyam/port-killer)
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg?style=flat-square)](https://github.com/neuralshyam/kport)
 
 ## ⚡ Quick Run (Zero Install)
 
@@ -58,6 +58,6 @@ kport --zombies
 ```
 
 ## 🌐 Links
-- **Documentation & Benchmarks:** [https://neuralshyam.github.io/port-killer/](https://neuralshyam.github.io/port-killer/)
-- **GitHub Repository:** [https://github.com/neuralshyam/port-killer](https://github.com/neuralshyam/port-killer)
+- **Documentation & Benchmarks:** [https://neuralshyam.github.io/kport/](https://neuralshyam.github.io/kport/)
+- **GitHub Repository:** [https://github.com/neuralshyam/kport](https://github.com/neuralshyam/kport)
 - **Author:** [Shyam Charan Das](https://shyamcharan.pages.dev/)

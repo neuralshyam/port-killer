@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://neuralshyam.github.io/port-killer/sitemap.xml
+Sitemap: https://neuralshyam.github.io/kport/sitemap.xml
