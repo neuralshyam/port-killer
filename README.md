@@ -43,13 +43,13 @@
 │ ❯ :3000   TCP    14205  bun [Next.js]│  Port:       :3000 (TCP)                     │
 │   :5173   TCP    18902  node [Vite]  │  Process:    bun  (PID: 14205)               │
 │   :5432   TCP    3012   postgres     │  Framework:  Next.js v15                     │
-│   :6379   TCP    2890   redis-server │  Directory:  /home/shyam/dev/temple-portal   │
+│   :6379   TCP    2890   redis-server │  Directory:  /home/shyam/dev/acme-portal     │
 │                                      │  Memory:     148.2 MB   User: shyam          │
 │                                      │  Status:     🟢 Active Dev Server             │
 │                                      │                                              │
 │                                      │  ⚡ Live Probe:                              │
 │                                      │    HTTP:     HTTP/1.1 200 OK (0.8ms)         │
-│                                      │    Title:    "Mayapur Portal"                │
+│                                      │    Title:    "Acme Portal"                   │
 ├──────────────────────────────────────┴──────────────────────────────────────────────┤
 │ [↑/↓] Navigate  [/] Filter  [p] Live Probe  [Space] Select  [Enter] Kill  [q] Quit │
 └─────────────────────────────────────────────────────────────────────────────────────┘
@@ -152,7 +152,7 @@ kport probe 3000
   Latency:      0.94 ms
   HTTP Status:  HTTP/1.1 200 OK
   Server:       Next.js
-  HTML Title:   "Devotee Portal"
+  HTML Title:   "Acme Cloud Portal"
 ```
 
 ---
@@ -255,5 +255,5 @@ Distributed under either the **MIT License** or **Apache-2.0 License** at your o
 See [LICENSE](LICENSE) for more details.
 
 <div align="center">
-  <sub>Built with devotion and pure Rust 🦀 by <a href="https://github.com/shyam">Shyam Charan Das</a>.</sub>
+  <sub>Built with high-performance Rust 🦀 by <a href="https://github.com/neuralshyam">Shyam Charan Das</a>.</sub>
 </div>
