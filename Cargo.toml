@@ -2,7 +2,7 @@
 name = "port-killer"
 version = "0.2.0"
 edition = "2021"
-authors = ["Shyam Charan Das <shyam@example.com>"]
+authors = ["Shyam Charan Das <neuralshyam@gmail.com>"]
 description = "A blazing-fast, interactive CLI & TUI to hunt down and kill processes hogging your ports."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/shyam/port-killer"
@@ -27,8 +27,8 @@ nix = { version = "0.29", features = ["signal", "process"] }
 libc = "0.2"
 
 [package.metadata.deb]
-maintainer = "Shyam Charan Das <shyam@example.com>"
-copyright = "2026, Shyam Charan Das <shyam@example.com>"
+maintainer = "Shyam Charan Das <neuralshyam@gmail.com>"
+copyright = "2026, Shyam Charan Das <neuralshyam@gmail.com>"
 license-file = ["LICENSE", "4"]
 extended-description = "A blazing-fast, interactive CLI & TUI to hunt down and kill processes hogging your ports."
 section = "utils"
