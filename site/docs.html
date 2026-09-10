@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation · port-killer (kport)</title>
+  <meta name="description" content="Comprehensive documentation, CLI reference, configuration guides, and architecture internals for port-killer." />
+  
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS & DaisyUI CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            deno: {
+              primary: '#66C2FF',
+              'primary-strong': '#0077CC',
+              secondary: '#B3E0FF',
+              tertiary: '#002633',
+              neutral: '#FFFFFF',
+              surface: '#F5F7F8',
+              'on-surface': '#000000',
+              muted: '#56575A',
+              border: '#E5EAEA',
+              success: '#66FFB2',
+              error: '#D64545',
+              hero: '#0B0F14',
+              'hero-card': '#141A21',
+            }
+          },
+          letterSpacing: {
+            display: '-1.8px',
+            headLg: '-0.9px',
+            headMd: '-1.1px',
+          },
+          borderRadius: {
+            'sm': '4px',
+            'md': '8px',
+            'lg': '12px',
+            'xl': '16px',
+            'full': '9999px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FFFFFF;
+      color: #000000;
+      -webkit-font-smoothing: antialiased;
+    }
+    .docs-nav-active {
+      background-color: #E5EAEA;
+      color: #000000;
+      font-weight: 600;
+    }
+    pre {
+      background-color: #0F141C;
+      color: #F5F7F8;
+      border-radius: 6px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+    code:not(pre code) {
+      background-color: #F5F7F8;
+      border: 1px solid #E5EAEA;
+      color: #0077CC;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-deno-neutral text-deno-on-surface">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-50 bg-deno-neutral/95 backdrop-blur-md border-b border-deno-border">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/logo-128.png" alt="port-killer logo" class="w-7 h-7 object-contain">
+          <span class="font-extrabold text-xl tracking-tight text-deno-on-surface">
+            port-killer <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">Docs</span>
+          </span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-2">
+          <span class="text-deno-border">/</span>
+          <span class="text-xs font-semibold text-deno-muted">v0.2.0 Reference Manual</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-sm font-medium text-deno-muted hover:text-black transition-colors">
+          Overview
+        </a>
+        <a href="https://github.com/neuralshyam/port-killer" target="_blank" 
+           class="h-[36px] px-3.5 rounded-full bg-[#2D3136] text-deno-neutral hover:bg-[#3D4248] transition-all flex items-center gap-2 text-xs font-medium">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT WITH SIDEBAR ==================== -->
+  <div class="max-w-7xl mx-auto px-6 py-10 flex gap-12">
+
+    <!-- ==================== SIDEBAR NAVIGATION ==================== -->
+    <aside class="hidden lg:block w-64 shrink-0">
+      <div class="sticky top-24 space-y-6 text-sm">
+        
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-deno-muted mb-2">Getting Started</h4>
+          <ul class="space-y-1">
+            <li><a href="#introduction" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Introduction</a></li>
+            <li><a href="#installation" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Installation</a></li>
+            <li><a href="#quick-start" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Quick Start</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-deno-muted mb-2">Command Reference</h4>
+          <ul class="space-y-1">
+            <li><a href="#single-multi-port" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Single & Multi Ports</a></li>
+            <li><a href="#ranges-wildcards" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Ranges & Wildcards</a></li>
+            <li><a href="#presets" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Dev & DB Presets (:dev, :db)</a></li>
+            <li><a href="#prober" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Live Prober (--probe)</a></li>
+            <li><a href="#zombies" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Zombie Sweeper (--zombies)</a></li>
+            <li><a href="#exec-chaining" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Kill & Exec (--exec)</a></li>
+            <li><a href="#json-output" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">JSON Output (--json)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-deno-muted mb-2">Interactive TUI</h4>
+          <ul class="space-y-1">
+            <li><a href="#tui-navigation" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">TUI Keybindings</a></li>
+            <li><a href="#tui-features" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Fuzzy Search & Probing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-deno-muted mb-2">Configuration</h4>
+          <ul class="space-y-1">
+            <li><a href="#kport-toml" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">kport.toml Workspace</a></li>
+            <li><a href="#ci-cd" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">CI/CD & GitHub Actions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-deno-muted mb-2">Architecture</h4>
+          <ul class="space-y-1">
+            <li><a href="#kernel-internals" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">Kernel Socket Parsing</a></li>
+            <li><a href="#signal-escalation" class="block px-3 py-1.5 rounded-md hover:bg-deno-surface text-deno-on-surface">SIGTERM Escalation</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- ==================== DOCUMENTATION ARTICLE BODY ==================== -->
+    <main class="flex-1 max-w-3xl space-y-16">
+
+      <!-- Section: Introduction -->
+      <section id="introduction" class="space-y-4">
+        <div class="inline-block px-2.5 py-0.5 rounded-full bg-deno-surface border border-deno-border text-xs font-bold uppercase text-deno-muted">
+          Overview
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-headLg text-deno-on-surface">
+          Introduction to port-killer
+        </h1>
+        <p class="text-deno-muted text-base leading-relaxed">
+          <code>port-killer</code> (aliased as <code>kport</code>) is a standalone, single-binary network port inspector and process termination utility written in Rust. It was built to eliminate the tedious cycles of running <code>lsof -i :3000</code>, parsing process IDs manually, and invoking <code>kill -9</code>.
+        </p>
+
+        <div class="p-4 bg-deno-surface border border-deno-border rounded-md text-sm text-deno-muted space-y-2">
+          <div class="font-bold text-deno-on-surface flex items-center gap-2">
+            <span class="text-deno-primary-strong">💡</span> Core Design Principles:
+          </div>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>Zero Subshells:</strong> Reads kernel socket structures directly instead of spawning sub-processes.</li>
+            <li><strong>Contextual Awareness:</strong> Identifies frameworks (Next.js, Vite, Postgres, Redis) and process working directories.</li>
+            <li><strong>Safe by Default:</strong> Graceful <code>SIGTERM</code> escalation before <code>SIGKILL</code> and daemon protection safeguards.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section: Installation -->
+      <section id="installation" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Installation</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          <code>port-killer</code> is distributed across all major package managers:
+        </p>
+
+        <div class="space-y-4">
+          <div>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Universal Shell Script (Linux & macOS)</h3>
+            <pre><code>curl -sSf https://raw.githubusercontent.com/neuralshyam/port-killer/main/install.sh | sh</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Cargo (Rust Registry)</h3>
+            <pre><code>cargo install port-killer</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">NPM / Bun (Zero-Install Execution)</h3>
+            <pre><code>bunx port-killer 3000
+# or globally
+bun add -g port-killer</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Homebrew (macOS / Linux)</h3>
+            <pre><code>brew install shyam/tap/kport</code></pre>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-sm text-deno-on-surface mb-1">Arch Linux AUR</h3>
+            <pre><code>yay -S port-killer-bin</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Quick Start -->
+      <section id="quick-start" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Quick Start</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          After installation, both <code>port-killer</code> and <code>kport</code> commands are available on your system path.
+        </p>
+
+        <pre><code># 1. Kill a blocking port
+kport 3000
+
+# 2. Launch interactive terminal UI
+kport
+
+# 3. List active ports in table format
+kport --list</code></pre>
+      </section>
+
+      <!-- Section: Single & Multi-Port Termination -->
+      <section id="single-multi-port" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Single & Multi-Port Termination</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Pass one or more port numbers directly as arguments. <code>kport</code> resolves their active processes and terminates them cleanly:
+        </p>
+
+        <pre><code># Terminate process on port 3000
+kport 3000
+
+# Terminate multiple ports simultaneously
+kport 3000 8080 5432 6379
+
+# Skip graceful SIGTERM and send SIGKILL immediately
+kport 3000 --force</code></pre>
+      </section>
+
+      <!-- Section: Ranges & Wildcards -->
+      <section id="ranges-wildcards" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Port Ranges & Wildcards</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Manage microservice clusters and container port maps easily using range expressions and wildcard prefixes:
+        </p>
+
+        <pre><code># Range syntax (inclusive)
+kport 3000..3010
+kport 8080-8085
+
+# Wildcard prefix matching
+kport 80*      # Matches 80, 8080, 8000, 8081...
+kport 54*      # Matches 5432, 5435...</code></pre>
+      </section>
+
+      <!-- Section: Presets -->
+      <section id="presets" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Dev & DB Presets</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Use built-in presets to sweep common development ports without memorizing port numbers:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 bg-deno-surface border border-deno-border rounded-md">
+            <h3 class="font-bold text-sm text-deno-primary-strong mb-1"><code>kport :dev</code></h3>
+            <p class="text-xs text-deno-muted">Sweeps web dev servers:</p>
+            <p class="text-xs font-mono mt-1 text-black">3000, 3001, 5173, 8000, 8080, 4200, 8888, 5000</p>
+          </div>
+
+          <div class="p-4 bg-deno-surface border border-deno-border rounded-md">
+            <h3 class="font-bold text-sm text-deno-primary-strong mb-1"><code>kport :db</code></h3>
+            <p class="text-xs text-deno-muted">Sweeps database servers:</p>
+            <p class="text-xs font-mono mt-1 text-black">5432 (Postgres), 3306 (MySQL), 6379 (Redis), 27017 (Mongo)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Live Prober -->
+      <section id="prober" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Live HTTP / TCP Prober</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Send a lightweight non-blocking probe to verify service health, latency, HTTP status, server header, and HTML <code>&lt;title&gt;</code> without opening a browser:
+        </p>
+
+        <pre><code>kport probe 3000
+# or
+kport --probe 3000</code></pre>
+
+        <div class="p-4 bg-[#0B0F14] text-deno-neutral rounded-md font-mono text-xs">
+          <div class="text-deno-primary font-bold mb-1">🔍 PROBE REPORT: Port 3000</div>
+          <div class="text-gray-600 mb-1">────────────────────────────────────────</div>
+          <div>  TCP Sockets:  <span class="text-deno-success font-bold">OPEN (Active Listener)</span></div>
+          <div>  Latency:      <span class="text-deno-primary font-bold">0.94 ms</span></div>
+          <div>  HTTP Status:  <span class="text-deno-success font-bold">HTTP/1.1 200 OK</span></div>
+          <div>  Server:       Next.js (Vercel)</div>
+          <div>  HTML Title:   "Acme Cloud Portal"</div>
+        </div>
+      </section>
+
+      <!-- Section: Zombie Sweeper -->
+      <section id="zombies" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Zombie / Orphan Process Sweeper</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          When an IDE, terminal tab, or Docker container crashes unexpectedly, background Node or Python processes often become orphans (<code>PPID == 1</code>), hogging RAM and blocking ports.
+        </p>
+
+        <pre><code># Scan and terminate all orphaned processes holding ports
+kport --zombies</code></pre>
+      </section>
+
+      <!-- Section: Kill & Exec -->
+      <section id="exec-chaining" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Kill & Exec Chaining</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Free a port and immediately spawn your development server in the same terminal session:
+        </p>
+
+        <pre><code>kport 3000 --exec "bun dev"
+kport 5173 --exec "npm run dev"
+kport 8000 --exec "cargo run"</code></pre>
+      </section>
+
+      <!-- Section: JSON Output -->
+      <section id="json-output" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Structured JSON Output</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Pass <code>--json</code> with <code>--list</code> to get machine-readable output for integration with scripts, CI pipelines, or editor extensions:
+        </p>
+
+        <pre><code>kport --list --json | jq '.[] | select(.port == 3000)'</code></pre>
+      </section>
+
+      <!-- Section: Interactive TUI -->
+      <section id="tui-navigation" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Interactive TUI Keybindings</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Run <code>kport</code> with no arguments to launch the Ratatui interactive dashboard:
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border border-deno-border rounded-md overflow-hidden">
+            <thead class="bg-deno-surface border-b border-deno-border text-xs font-bold uppercase">
+              <tr>
+                <th class="p-3">Key</th>
+                <th class="p-3">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-deno-border">
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">↑ / ↓ or j / k</td><td class="p-3">Navigate active port list</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">/</td><td class="p-3">Live fuzzy search by port, process, framework, or CWD</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">p</td><td class="p-3">Send live HTTP/TCP probe to selected port</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">Space</td><td class="p-3">Toggle selection for multi-process batch actions</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">Enter</td><td class="p-3">Terminate selected process(es) with graceful SIGTERM</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">K (Shift + K)</td><td class="p-3">Force kill selected process(es) with SIGKILL</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">r</td><td class="p-3">Refresh socket list</td></tr>
+              <tr><td class="p-3 font-mono font-bold text-deno-primary-strong">q / Esc</td><td class="p-3">Exit TUI</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Monorepo Config -->
+      <section id="kport-toml" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Monorepo Config (kport.toml)</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          Place a <code>kport.toml</code> in the root of your project or monorepo to standardize dev port management across team members:
+        </p>
+
+        <pre><code># kport.toml
+[services]
+frontend  = 3000
+backend   = 8000
+database  = 5432
+redis     = 6379
+storybook = 6006</code></pre>
+
+        <pre><code># Check active/down status of all configured services
+kport status
+
+# Reset and free all project ports in one command
+kport reset</code></pre>
+      </section>
+
+      <!-- Section: Architecture & Signal Escalation -->
+      <section id="kernel-internals" class="space-y-4 border-t border-deno-border pt-10">
+        <h2 class="text-2xl font-bold tracking-headMd text-deno-on-surface">Kernel Socket Architecture & Safety</h2>
+        <p class="text-deno-muted text-sm leading-relaxed">
+          <code>port-killer</code> avoids the heavy latency of spawning shell pipelines like <code>lsof</code> or <code>netstat</code> by directly parsing native kernel structures:
+        </p>
+
+        <ul class="list-disc pl-5 space-y-2 text-sm text-deno-muted">
+          <li><strong>Linux:</strong> Scans <code>/proc/net/tcp</code>, <code>/proc/net/tcp6</code>, <code>/proc/net/udp</code> and matches socket inodes directly against <code>/proc/&lt;pid&gt;/fd/*</code>.</li>
+          <li><strong>macOS:</strong> Uses native <code>libproc</code> and low-overhead <code>lsof -F</code> record streams.</li>
+          <li><strong>Windows:</strong> Direct Win32 socket table inspection.</li>
+          <li><strong>Graceful Escalation:</strong> Sends <code>SIGTERM</code> and monitors process exit for up to 500ms before falling back to <code>SIGKILL</code>.</li>
+          <li><strong>Daemon Guard:</strong> Rejects termination of system processes (PID ≤ 1, <code>sshd</code>, <code>systemd</code>, <code>dockerd</code>) unless explicitly overridden with <code>--force</code>.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-deno-surface border-t border-deno-border py-12 px-6 mt-20">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-deno-muted">
+      <div class="flex items-center gap-3">
+        <img src="assets/logo-128.png" alt="port-killer logo" class="w-6 h-6 rounded object-cover">
+        <span class="font-bold text-deno-on-surface">port-killer</span>
+        <span>· MIT / Apache-2.0 License</span>
+      </div>
+
+      <div>
+        Crafted with pure Rust 🦀 by <a href="https://github.com/neuralshyam" target="_blank" class="font-bold text-deno-on-surface hover:text-deno-primary-strong transition-colors">Shyam Charan Das</a>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-black transition-colors">Overview</a>
+        <a href="https://github.com/neuralshyam/port-killer" target="_blank" class="hover:text-black transition-colors">GitHub</a>
+        <a href="https://crates.io/crates/port-killer" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
