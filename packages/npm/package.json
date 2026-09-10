@@ -1,11 +1,14 @@
 {
-  "name": "kport",
+  "name": "@neuralshyam/kport",
   "version": "0.2.0",
   "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports.",
   "main": "bin/kport.js",
   "bin": {
     "kport": "./bin/kport.js",
     "port-killer": "./bin/kport.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "postinstall": "node bin/install.js"

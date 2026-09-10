@@ -1,8 +1,8 @@
-# ⚡ kport
+# ⚡ @neuralshyam/kport
 
 > Ultra-fast CLI & TUI to hunt down and kill processes hogging your network ports. Written in pure Rust with zero external runtime dependencies.
 
-[![npm](https://img.shields.io/npm/v/kport?color=66C2FF&style=flat-square)](https://www.npmjs.com/package/kport)
+[![npm](https://img.shields.io/npm/v/@neuralshyam/kport?color=66C2FF&style=flat-square)](https://www.npmjs.com/package/@neuralshyam/kport)
 [![Crates.io](https://img.shields.io/crates/v/kport?color=66FFB2&style=flat-square)](https://crates.io/crates/kport)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg?style=flat-square)](https://github.com/neuralshyam/kport)
 
@@ -10,20 +10,20 @@
 
 ```bash
 # Using bunx (recommended)
-bunx kport 3000
+bunx @neuralshyam/kport 3000
 
 # Using npx
-npx kport 3000
+npx @neuralshyam/kport 3000
 ```
 
 ## 🚀 Install Globally
 
 ```bash
 # Bun
-bun install -g kport
+bun add -g @neuralshyam/kport
 
 # NPM
-npm install -g kport
+npm install -g @neuralshyam/kport
 
 # Cargo
 cargo install kport
