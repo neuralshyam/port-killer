@@ -1,3 +1,6 @@
+%global debug_package %{nil}
+%global __os_install_post %{nil}
+
 Name:           kport
 Version:        0.2.0
 Release:        1%{?dist}
@@ -20,7 +23,7 @@ to inspect, probe, and slay network port conflicts with zero friction.
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_bindir}
 install -m 0755 port-killer %{buildroot}%{_bindir}/kport
-ln -s %{_bindir}/kport %{buildroot}%{_bindir}/port-killer
+ln -sf kport %{buildroot}%{_bindir}/port-killer
 
 %files
 %{_bindir}/kport
