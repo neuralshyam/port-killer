@@ -1,14 +1,13 @@
 use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::path::Path;
-use sysinfo::{Pid, System, Users};
+use sysinfo::{Pid, ProcessesToUpdate, System, Users};
 
 use crate::detector::detect_project_info;
 use crate::model::{PortProcess, Protocol};
 
 pub fn scan_listening_ports() -> Vec<PortProcess> {
-    let mut sys = System::new_all();
-    sys.refresh_all();
+    let mut sys = System::new();
     let users = Users::new_with_refreshed_list();
 
     // Map: socket inode -> (port, protocol)
@@ -55,6 +54,13 @@ pub fn scan_listening_ports() -> Vec<PortProcess> {
             }
         }
     }
+
+    // Targeted refresh: Only query the specific PIDs associated with active sockets!
+    let target_pids: Vec<Pid> = inode_to_pid
+        .values()
+        .map(|&p| Pid::from(p as usize))
+        .collect();
+    sys.refresh_processes(ProcessesToUpdate::Some(&target_pids), true);
 
     let mut results: Vec<PortProcess> = Vec::new();
     let mut seen: HashSet<(u16, Protocol, u32)> = HashSet::new();

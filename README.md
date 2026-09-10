@@ -216,13 +216,14 @@ kport --list --json | jq '.[] | select(.framework == "Next.js")'
 
 ## ⚡ Performance Benchmarks
 
-Measured on Linux 6.8 (AMD Ryzen 9 7950X, 100 listening sockets):
+Measured over 50 iterations on a live Linux system with active network sockets:
 
-```text
-port-killer --list     ███ 1.8ms
-fuser -k               ████████████████ 28.4ms
-lsof -i + kill         ████████████████████████████ 45.1ms
-```
+| Tool / Command | Average Execution Time | What it Does |
+|---|:---:|---|
+| **`port-killer` / `kport` (Rust)** | **~13.6 ms** ⚡ | Full socket scan + PID matching + CWD & framework fingerprinting |
+| `ss -tulpn` (C / iproute2) | ~15.7 ms | Raw socket table listing only |
+| `lsof -iTCP -sTCP:LISTEN` | ~36.6 ms | Plain listening socket inspection |
+| `fuser 3000/tcp` | ~2.8 ms | Single port process check |
 
 - **Binary Size:** ~2.1MB (stripped release)
 - **Memory Usage:** < 3MB RSS
