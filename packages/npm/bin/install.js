@@ -108,5 +108,9 @@ async function downloadBinary() {
   }
 }
 
-downloadBinary();
+module.exports = { downloadBinary };
+
+if (require.main === module) {
+  downloadBinary();
+}
 
