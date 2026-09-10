@@ -1,13 +1,12 @@
 use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::path::Path;
-use sysinfo::{Pid, ProcessesToUpdate, System, Users};
+use sysinfo::Users;
 
 use crate::detector::detect_project_info;
 use crate::model::{PortProcess, Protocol};
 
 pub fn scan_listening_ports() -> Vec<PortProcess> {
-    let mut sys = System::new();
     let users = Users::new_with_refreshed_list();
 
     // Map: socket inode -> (port, protocol)
@@ -55,13 +54,6 @@ pub fn scan_listening_ports() -> Vec<PortProcess> {
         }
     }
 
-    // Targeted refresh: Only query the specific PIDs associated with active sockets!
-    let target_pids: Vec<Pid> = inode_to_pid
-        .values()
-        .map(|&p| Pid::from(p as usize))
-        .collect();
-    sys.refresh_processes(ProcessesToUpdate::Some(&target_pids), true);
-
     let mut results: Vec<PortProcess> = Vec::new();
     let mut seen: HashSet<(u16, Protocol, u32)> = HashSet::new();
 
@@ -73,27 +65,59 @@ pub fn scan_listening_ports() -> Vec<PortProcess> {
         seen.insert((port, protocol, pid));
 
         let (name, cmdline, memory, cpu, user, ppid, is_orphan, is_protected) = if pid > 0 {
-            if let Some(proc) = sys.process(Pid::from(pid as usize)) {
-                let proc_name = proc.name().to_string_lossy().to_string();
-                let cmd = proc
-                    .cmd()
-                    .iter()
-                    .map(|s| s.to_string_lossy().to_string())
-                    .collect::<Vec<_>>()
-                    .join(" ");
-                let mem = proc.memory();
-                let cpu_val = proc.cpu_usage();
-                let user_str = proc
-                    .user_id()
-                    .and_then(|uid| users.get_user_by_id(uid))
-                    .map(|u| u.name().to_string());
-                let parent_pid = proc.parent().map(|p| p.as_u32());
-                let orphan = parent_pid == Some(1) && !is_protected_process(&proc_name, pid);
-                let protected = is_protected_process(&proc_name, pid);
-                (proc_name, cmd, mem, cpu_val, user_str, parent_pid, orphan, protected)
-            } else {
-                ("unknown".to_string(), String::new(), 0, 0.0, None, None, false, false)
+            let proc_name = fs::read_to_string(format!("/proc/{}/comm", pid))
+                .map(|s| s.trim().to_string())
+                .unwrap_or_else(|_| "unknown".to_string());
+
+            let cmd = fs::read(format!("/proc/{}/cmdline", pid))
+                .map(|bytes| {
+                    bytes
+                        .split(|&b| b == 0)
+                        .filter(|b| !b.is_empty())
+                        .map(|b| String::from_utf8_lossy(b).to_string())
+                        .collect::<Vec<_>>()
+                        .join(" ")
+                })
+                .unwrap_or_default();
+
+            let mut parent_pid = None;
+            let mut user_str = None;
+
+            if let Ok(status) = fs::read_to_string(format!("/proc/{}/status", pid)) {
+                for line in status.lines() {
+                    if line.starts_with("PPid:") {
+                        if let Some(val) = line.split_whitespace().nth(1) {
+                            parent_pid = val.parse::<u32>().ok();
+                        }
+                    } else if line.starts_with("Uid:") {
+                        if let Some(val) = line.split_whitespace().nth(1) {
+                            if let Ok(uid) = val.parse::<u32>() {
+                                user_str = users
+                                    .iter()
+                                    .find(|u| **u.id() == uid)
+                                    .map(|u| u.name().to_string());
+                            }
+                        }
+                    }
+                }
             }
+
+            let mem = fs::read_to_string(format!("/proc/{}/statm", pid))
+                .ok()
+                .and_then(|s| {
+                    let parts: Vec<&str> = s.split_whitespace().collect();
+                    if parts.len() >= 2 {
+                        parts[1].parse::<u64>().ok().map(|pages| pages * 4096)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap_or(0);
+
+            let orphan = parent_pid == Some(1) && !is_protected_process(&proc_name, pid);
+            let protected = is_protected_process(&proc_name, pid);
+
+            (proc_name, cmd, mem, 0.0, user_str, parent_pid, orphan, protected)
         } else {
             ("system/kernel".to_string(), String::new(), 0, 0.0, None, None, false, true)
         };
