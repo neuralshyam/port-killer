@@ -1,0 +1,34 @@
+[package]
+name = "port-killer"
+version = "0.2.0"
+edition = "2021"
+authors = ["Shyam Charan Das <shyam@example.com>"]
+description = "A blazing-fast, interactive CLI & TUI to hunt down and kill processes hogging your ports."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/shyam/port-killer"
+keywords = ["cli", "port", "kill", "tui", "network"]
+categories = ["command-line-utilities", "development-tools"]
+default-run = "port-killer"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive", "cargo"] }
+ratatui = "0.29"
+crossterm = { version = "0.28", features = ["event-stream"] }
+sysinfo = "0.33"
+anyhow = "1.0"
+thiserror = "2.0"
+colored = "3.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.29", features = ["signal", "process"] }
+libc = "0.2"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
