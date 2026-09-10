@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo-128.png" alt="port-killer logo" width="110" style="border-radius: 22px; margin-bottom: 8px;" />
+<img src="assets/logo-128.png" alt="port-killer logo" width="90" style="margin-bottom: 8px;" />
 
 # ⚡ port-killer (`kport`)
 
