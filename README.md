@@ -86,8 +86,8 @@ cargo install kport
 
 ### 3. Quick Run via Bun / NPM (Zero Install)
 ```bash
-bunx kport 3000
-# or npx kport 3000
+bunx @neuralshyam/kport 3000
+# or npx @neuralshyam/kport 3000
 ```
 
 ### 4. Build from Source
