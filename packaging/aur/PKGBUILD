@@ -1,0 +1,20 @@
+# Maintainer: Shyam Charan Das <shyam@example.com>
+pkgname=port-killer-bin
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports"
+arch=('x86_64' 'aarch64')
+url="https://github.com/shyam/port-killer"
+license=('MIT' 'Apache-2.0')
+provides=('port-killer' 'kport')
+conflicts=('port-killer')
+
+source_x86_64=("https://github.com/shyam/port-killer/releases/download/v${pkgver}/port-killer-x86_64-unknown-linux-gnu.tar.gz")
+source_aarch64=("https://github.com/shyam/port-killer/releases/download/v${pkgver}/port-killer-aarch64-unknown-linux-gnu.tar.gz")
+sha256sums_x86_64=('SKIP')
+sha256sums_aarch64=('SKIP')
+
+package() {
+    install -Dm755 "${srcdir}/port-killer" "${pkgdir}/usr/bin/port-killer"
+    ln -s "/usr/bin/port-killer" "${pkgdir}/usr/bin/kport"
+}

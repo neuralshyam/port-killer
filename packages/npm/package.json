@@ -1,0 +1,36 @@
+{
+  "name": "port-killer",
+  "version": "0.2.0",
+  "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports.",
+  "main": "bin/port-killer.js",
+  "bin": {
+    "port-killer": "./bin/port-killer.js",
+    "kport": "./bin/port-killer.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shyam/port-killer.git"
+  },
+  "keywords": [
+    "port",
+    "kill",
+    "killer",
+    "tui",
+    "cli",
+    "eaddrinuse",
+    "freeport",
+    "process",
+    "network",
+    "bun",
+    "rust"
+  ],
+  "author": "Shyam Charan Das <shyam@example.com>",
+  "license": "MIT OR Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/shyam/port-killer/issues"
+  },
+  "homepage": "https://github.com/shyam/port-killer#readme"
+}

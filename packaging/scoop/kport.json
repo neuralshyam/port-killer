@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports",
+    "homepage": "https://github.com/shyam/port-killer",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/shyam/port-killer/releases/download/v0.2.0/port-killer-x86_64-pc-windows-msvc.zip",
+            "hash": "PLACEHOLDER_HASH_WIN_X64"
+        }
+    },
+    "bin": [
+        "port-killer.exe",
+        ["port-killer.exe", "kport"]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/shyam/port-killer/releases/download/v$version/port-killer-x86_64-pc-windows-msvc.zip"
+            }
+        }
+    }
+}
