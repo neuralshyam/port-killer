@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-REPO="shyam/port-killer"
+REPO="neuralshyam/port-killer"
 BIN_NAME="kport"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/.local/bin}"
 

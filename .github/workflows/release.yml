@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   build-release:
     name: Build (${{ matrix.target }})
@@ -41,13 +44,9 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Install cross & cargo-deb (if Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          cargo install cargo-deb
-          if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
-            cargo install cross
-          fi
+      - name: Install cross (if ARM Linux)
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: cargo install cross
 
       - name: Build Release Binary
         run: |
@@ -57,10 +56,6 @@ jobs:
             cargo build --release --target ${{ matrix.target }}
           fi
         shell: bash
-
-      - name: Build Debian Package (x86_64 Linux)
-        if: matrix.target == 'x86_64-unknown-linux-gnu'
-        run: cargo deb --no-build
 
       - name: Package Archive (Unix)
         if: matrix.os != 'windows-latest'
@@ -83,22 +78,5 @@ jobs:
         with:
           files: |
             port-killer-${{ matrix.target }}.${{ matrix.archive_ext }}
-            target/debian/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-npm:
-    name: Publish NPM / Bun Package
-    needs: build-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: Publish to NPM
-        run: |
-          cd packages/npm
-          bun publish --access public
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

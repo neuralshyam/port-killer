@@ -6,11 +6,9 @@
 
 ### *The lightning-fast, intelligent port hunter & process slayer for modern developers.*
 
-[![Crates.io](https://img.shields.io/crates/v/port-killer.svg?style=for-the-badge&color=fc6d26&logo=rust)](https://crates.io/crates/port-killer)
-[![Downloads](https://img.shields.io/crates/d/port-killer.svg?style=for-the-badge&color=2ecc71)](https://crates.io/crates/port-killer)
 [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-8a2be2.svg?style=for-the-badge)](https://github.com/shyam/port-killer)
-[![CI](https://img.shields.io/github/actions/workflow/status/shyam/port-killer/ci.yml?branch=main&style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/shyam/port-killer/actions)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-8a2be2.svg?style=for-the-badge)](https://github.com/neuralshyam/port-killer)
+[![CI](https://img.shields.io/github/actions/workflow/status/neuralshyam/port-killer/ci.yml?branch=main&style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/neuralshyam/port-killer/actions)
 
 <br />
 
@@ -26,7 +24,7 @@
 <p align="center">
   <b>Never run <code>kill -9 $(lsof -t -i:3000)</code> again.</b>
   <br />
-  Sub-millisecond execution • Project & framework detection • Live HTTP/TCP probing • Interactive Ratatui TUI
+  Fast kernel socket inspection • Project & framework detection • Live HTTP/TCP probing • Interactive Ratatui TUI
 </p>
 
 [Quick Install](#-installation) • [Usage & Features](#-features--usage) • [TUI Mode](#-interactive-tui-mode) • [Benchmarks](#-performance-benchmarks) • [Monorepo Config](#-monorepo-config-kporttoml)
@@ -63,7 +61,7 @@
 
 | Capability | Bash `lsof` + `kill -9` | `fuser -k` | `port-killer` (`kport`) |
 |---|:---:|:---:|:---:|
-| **Execution Latency** | ~45ms | ~28ms | **< 2ms** 🚀 |
+| **Execution Latency (Measured)** | ~36.6ms | ~2.8ms | **~13.6ms (Full scan) / ~2.8ms (Single)** ⚡ |
 | **Interactive TUI** | ❌ | ❌ | **Yes (Ratatui)** ✨ |
 | **Project & Framework Detection** | ❌ | ❌ | **Yes (Next, Vite, Postgres...)** 🧠 |
 | **Live HTTP / Latency Probe** | ❌ | ❌ | **Yes (`kport probe`)** 🩺 |
@@ -78,22 +76,17 @@
 
 ### 1. Universal One-Line Installer (Linux & macOS)
 ```bash
-curl -sSf https://raw.githubusercontent.com/shyam/port-killer/main/install.sh | sh
+curl -sSf https://raw.githubusercontent.com/neuralshyam/port-killer/main/install.sh | sh
 ```
 
-### 2. Via Cargo (Rust Package Manager)
+### 2. Via Cargo (From Source / Git)
 ```bash
-cargo install port-killer
+cargo install --git https://github.com/neuralshyam/port-killer.git
 ```
 
-### 3. Homebrew (macOS / Linux)
+### 3. Build from Source
 ```bash
-brew install shyam/tap/kport
-```
-
-### 4. Build from Source
-```bash
-git clone https://github.com/shyam/port-killer.git
+git clone https://github.com/neuralshyam/port-killer.git
 cd port-killer
 cargo build --release
 sudo cp target/release/port-killer /usr/local/bin/kport
@@ -160,7 +153,7 @@ kport probe 3000
 ---
 
 ### 5. Zombie & Orphan Process Sweeper (`--zombies`)
-Clean up orphaned node/python/docker background processes whose parent terminal died (`PPID == 1`):
+Clean up orphaned background processes whose parent terminal died (`PPID == 1`):
 ```bash
 kport --zombies
 ```
@@ -228,7 +221,6 @@ Measured over 50 iterations on a live Linux system with active network sockets:
 | `fuser 3000/tcp` | ~2.8 ms | Single port process check |
 
 - **Binary Size:** ~2.1MB (stripped release)
-- **Memory Usage:** < 3MB RSS
 - **Startup Latency:** < 500µs
 
 ---
@@ -239,7 +231,7 @@ Contributions, issues, and feature requests are warmly welcomed!
 
 ```bash
 # Clone the repository
-git clone https://github.com/shyam/port-killer.git
+git clone https://github.com/neuralshyam/port-killer.git
 cd port-killer
 
 # Run tests
