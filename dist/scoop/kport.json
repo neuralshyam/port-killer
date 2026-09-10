@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your network ports",
+  "homepage": "https://neuralshyam.github.io/kport/",
+  "license": "MIT",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/neuralshyam/kport/releases/download/v0.2.0/port-killer-x86_64-pc-windows-msvc.zip",
+      "hash": "3b97b93339976e7b530efebf0bc4955b934bfcb5fe2d3c9baaa7b545f4fa6efd",
+      "bin": [
+        ["port-killer.exe", "kport"],
+        "port-killer.exe"
+      ]
+    }
+  },
+  "checkver": "github",
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/neuralshyam/kport/releases/download/v$version/port-killer-x86_64-pc-windows-msvc.zip"
+      }
+    }
+  }
+}

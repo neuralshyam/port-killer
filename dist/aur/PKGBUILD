@@ -1,0 +1,21 @@
+# Maintainer: Shyam Charan Das <neuralshyam@gmail.com>
+pkgname=kport-bin
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your network ports"
+arch=('x86_64' 'aarch64')
+url="https://neuralshyam.github.io/kport/"
+license=('MIT' 'Apache-2.0')
+provides=('kport' 'port-killer')
+conflicts=('kport')
+
+source_x86_64=("https://github.com/neuralshyam/kport/releases/download/v${pkgver}/port-killer-x86_64-unknown-linux-gnu.tar.gz")
+sha256sums_x86_64=('32b986900b96cb35c65c342f0d9c490a02ef495fa0451a24896fe2225e365cb9')
+
+source_aarch64=("https://github.com/neuralshyam/kport/releases/download/v${pkgver}/port-killer-aarch64-unknown-linux-gnu.tar.gz")
+sha256sums_aarch64=('66410f0d41a41a6360e74ce1cf4aa3fdb5be7ff8e096ff8be94f4d2f8319f3a6')
+
+package() {
+    install -Dm755 "${srcdir}/port-killer" "${pkgdir}/usr/bin/kport"
+    ln -s /usr/bin/kport "${pkgdir}/usr/bin/port-killer"
+}

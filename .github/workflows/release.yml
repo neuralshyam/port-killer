@@ -17,24 +17,29 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            bin_name: port-killer
+            bin_name: kport
             archive_ext: tar.gz
+            build_deb: true
           - os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
-            bin_name: port-killer
+            bin_name: kport
             archive_ext: tar.gz
+            build_deb: false
           - os: macos-latest
             target: x86_64-apple-darwin
-            bin_name: port-killer
+            bin_name: kport
             archive_ext: tar.gz
+            build_deb: false
           - os: macos-latest
             target: aarch64-apple-darwin
-            bin_name: port-killer
+            bin_name: kport
             archive_ext: tar.gz
+            build_deb: false
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            bin_name: port-killer.exe
+            bin_name: kport.exe
             archive_ext: zip
+            build_deb: false
 
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +53,10 @@ jobs:
         if: matrix.target == 'aarch64-unknown-linux-gnu'
         run: cargo install cross
 
+      - name: Install cargo-deb (if Linux x86_64)
+        if: matrix.build_deb == true
+        run: cargo install cargo-deb
+
       - name: Build Release Binary
         run: |
           if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
@@ -57,10 +66,18 @@ jobs:
           fi
         shell: bash
 
+      - name: Build Debian (.deb) Package
+        if: matrix.build_deb == true
+        run: |
+          cargo deb --target ${{ matrix.target }} -o kport-x86_64.deb
+        shell: bash
+
       - name: Package Archive (Unix)
         if: matrix.os != 'windows-latest'
         run: |
           cd target/${{ matrix.target }}/release
+          tar -czf ../../../kport-${{ matrix.target }}.tar.gz ${{ matrix.bin_name }}
+          # Backwards compatibility archive
           tar -czf ../../../port-killer-${{ matrix.target }}.tar.gz ${{ matrix.bin_name }}
           cd ../../..
         shell: bash
@@ -69,6 +86,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd target/${{ matrix.target }}/release
+          7z a ../../../kport-${{ matrix.target }}.zip ${{ matrix.bin_name }}
           7z a ../../../port-killer-${{ matrix.target }}.zip ${{ matrix.bin_name }}
           cd ../../..
         shell: bash
@@ -77,6 +95,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
+            kport-${{ matrix.target }}.${{ matrix.archive_ext }}
             port-killer-${{ matrix.target }}.${{ matrix.archive_ext }}
+            kport-*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
