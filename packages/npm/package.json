@@ -1,5 +1,5 @@
 {
-  "name": "port-killer",
+  "name": "kport",
   "version": "0.2.0",
   "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports.",
   "main": "bin/port-killer.js",
