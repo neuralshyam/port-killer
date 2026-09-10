@@ -4,10 +4,10 @@ use std::time::Instant;
 fn main() {
     println!("🔬 Running 50 iterations of each tool on your live system...\n");
 
-    // 1. Benchmark port-killer scan
+    // 1. Benchmark kport scan
     let start_pk = Instant::now();
     for _ in 0..50 {
-        let _ = port_killer::scanner::scan_ports();
+        let _ = kport::scanner::scan_ports();
     }
     let duration_pk = start_pk.elapsed() / 50;
 

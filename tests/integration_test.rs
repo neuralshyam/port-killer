@@ -1,11 +1,11 @@
-use port_killer::model::{PortProcess, Protocol};
-use port_killer::pattern::resolve_port_patterns;
-use port_killer::probe::probe_port;
+use kport::model::{PortProcess, Protocol};
+use kport::pattern::resolve_port_patterns;
+use kport::probe::probe_port;
 use std::net::TcpListener;
 
 #[test]
 fn test_integration_port_scanning() {
-    let ports = port_killer::scanner::scan_ports();
+    let ports = kport::scanner::scan_ports();
     // Verify scan returns a valid list without panicking
     for p in &ports {
         assert!(p.port > 0);

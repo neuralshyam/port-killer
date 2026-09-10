@@ -1,5 +1,5 @@
 [package]
-name = "port-killer"
+name = "kport"
 version = "0.2.0"
 edition = "2021"
 authors = ["Shyam Charan Das <neuralshyam@gmail.com>"]
