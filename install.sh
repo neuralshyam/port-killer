@@ -39,7 +39,7 @@ TMP_DIR=$(mktemp -d)
 curl -sL "${URL}" -o "${TMP_DIR}/port-killer.tar.gz" || {
     echo "⚠️ Pre-built release not found, falling back to cargo install..."
     if command -v cargo >/dev/null 2>&1; then
-        cargo install port-killer
+        cargo install kport
         echo "✓ Successfully installed via cargo!"
         exit 0
     else

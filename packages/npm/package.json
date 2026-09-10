@@ -2,19 +2,21 @@
   "name": "kport",
   "version": "0.2.0",
   "description": "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports.",
-  "main": "bin/port-killer.js",
+  "main": "bin/kport.js",
   "bin": {
-    "port-killer": "./bin/port-killer.js",
-    "kport": "./bin/port-killer.js"
+    "kport": "./bin/kport.js",
+    "port-killer": "./bin/kport.js"
   },
   "scripts": {
     "postinstall": "node bin/install.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shyam/port-killer.git"
+    "url": "https://github.com/neuralshyam/port-killer.git"
   },
   "keywords": [
+    "kport",
+    "port-killer",
     "port",
     "kill",
     "killer",
@@ -30,7 +32,8 @@
   "author": "Shyam Charan Das <neuralshyam@gmail.com>",
   "license": "MIT OR Apache-2.0",
   "bugs": {
-    "url": "https://github.com/shyam/port-killer/issues"
+    "url": "https://github.com/neuralshyam/port-killer/issues"
   },
-  "homepage": "https://github.com/shyam/port-killer#readme"
+  "homepage": "https://neuralshyam.github.io/port-killer/"
 }
+

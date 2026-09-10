@@ -37,7 +37,7 @@ pub fn probe_port(port: u16) -> ProbeResult {
     let _ = stream.set_write_timeout(Some(Duration::from_millis(500)));
 
     let request = format!(
-        "GET / HTTP/1.1\r\nHost: localhost:{}\r\nUser-Agent: port-killer/0.2.0\r\nAccept: */*\r\nConnection: close\r\n\r\n",
+        "GET / HTTP/1.1\r\nHost: localhost:{}\r\nUser-Agent: kport/0.2.0\r\nAccept: */*\r\nConnection: close\r\n\r\n",
         port
     );
 
