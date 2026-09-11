@@ -10,11 +10,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://neuralshyam.github.io/kport/" />
   <meta property="og:title" content="kport · Fast Network Port Hunter & Process Slayer" />
-  <meta property="og:description" content="Never run kill -9  again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
+  <meta property="og:description" content="Never run kill -9 $(lsof -t -i:3000) again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
   <meta property="og:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="kport · Fast Network Port Hunter & Process Slayer" />
-  <meta name="twitter:description" content="Never run kill -9  again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
+  <meta name="twitter:description" content="Never run kill -9 $(lsof -t -i:3000) again. Fast kernel socket inspection, framework detection, and interactive TUI in Rust." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/neuralshyam/kport/main/site/assets/logo.png" />
 
   <!-- Structured Data / JSON-LD -->
@@ -65,13 +65,14 @@
   }
   </script>
   
-  <!-- Fonts: Inter, JetBrains Mono, & Playwrite US Modern -->
+  <!-- Fonts: Playwrite US Modern (All over) & JetBrains Mono for Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Playwrite+US+Modern:wght@100..400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Playwrite+US+Modern:wght@100..400&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS & DaisyUI CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -81,31 +82,37 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+            sans: ['"Playwrite US Modern"', 'cursive', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
-            script: ['"Playwrite US Modern"', 'cursive', 'sans-serif'],
           },
           colors: {
-            cyber: {
-              black: '#07090D',
-              dark: '#0E131A',
-              card: '#141B24',
-              cardHover: '#1A232F',
-              border: '#222D3D',
-              borderLight: '#2E3D52',
-              neonBlue: '#45C0FF',
-              neonGreen: '#34D399',
-              neonPurple: '#A78BFA',
-              neonYellow: '#FBBF24',
-              neonRed: '#F87171',
-              textMain: '#F3F4F6',
-              textMuted: '#9CA3AF',
+            deno: {
+              primary: '#66C2FF',
+              'primary-strong': '#0077CC',
+              secondary: '#B3E0FF',
+              tertiary: '#002633',
+              neutral: '#FFFFFF',
+              surface: '#F5F7F8',
+              'on-surface': '#000000',
+              muted: '#56575A',
+              border: '#E5EAEA',
+              success: '#66FFB2',
+              error: '#D64545',
+              hero: '#0B0F14',
+              'hero-card': '#141A21',
             }
           },
-          boxShadow: {
-            glow: '0 0 50px -12px rgba(69, 192, 255, 0.25)',
-            glowGreen: '0 0 40px -10px rgba(52, 211, 153, 0.3)',
-            glowCard: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+          letterSpacing: {
+            display: '-1px',
+            headLg: '-0.5px',
+            headMd: '-0.3px',
+          },
+          borderRadius: {
+            'sm': '4px',
+            'md': '8px',
+            'lg': '12px',
+            'xl': '16px',
+            'full': '9999px',
           }
         }
       }
@@ -116,270 +123,200 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <style>
+    *, html, body, button, a, h1, h2, h3, h4, h5, h6, p, span, div {
+      font-family: 'Playwrite US Modern', cursive, sans-serif;
+    }
+    
+    code, pre, kbd, .font-mono, .terminal-text, #install-cmd, #terminal-demo * {
+      font-family: 'JetBrains Mono', monospace !important;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #07090D;
-      color: #F3F4F6;
+      background-color: #FFFFFF;
+      color: #000000;
       -webkit-font-smoothing: antialiased;
     }
     
-    .grid-bg {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
-
-    .playwrite-badge {
-      font-family: 'Playwrite US Modern', cursive;
-    }
-
-    .shimmer-text {
-      background: linear-gradient(90deg, #45C0FF, #34D399, #A78BFA, #45C0FF);
-      background-size: 300% 100%;
-      animation: shimmer 8s ease-in-out infinite;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .glow-accent {
+      background: radial-gradient(600px circle at 50% 20%, rgba(102, 194, 255, 0.15), transparent 70%);
     }
 
     .terminal-scroll::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
     }
     .terminal-scroll::-webkit-scrollbar-thumb {
-      background: #2E3D52;
+      background: #2D3136;
       border-radius: 4px;
     }
   </style>
 </head>
-<body class="bg-cyber-black text-cyber-textMain grid-bg min-h-screen selection:bg-cyber-neonBlue selection:text-cyber-black">
+<body class="bg-deno-neutral text-deno-on-surface">
 
   <!-- ==================== TOP NAVIGATION ==================== -->
-  <header class="sticky top-0 z-50 bg-cyber-dark/80 backdrop-blur-xl border-b border-cyber-border">
+  <header class="sticky top-0 z-50 bg-deno-neutral/90 backdrop-blur-md border-b border-deno-border">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="relative">
-          <div class="absolute inset-0 bg-cyber-neonBlue/30 blur-md rounded-full group-hover:bg-cyber-neonBlue/50 transition-all"></div>
-          <img src="assets/logo-128.png" alt="kport logo" class="w-8 h-8 object-contain relative z-10">
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-cyber-neonBlue transition-colors">kport</span>
-          <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyber-neonGreen/10 text-cyber-neonGreen border border-cyber-neonGreen/30">v0.2.2</span>
-        </div>
+      <a href="#" class="flex items-center gap-2.5">
+        <img src="assets/logo-128.png" alt="kport logo" class="w-7 h-7 object-contain">
+        <span class="font-bold text-xl tracking-tight text-deno-on-surface">
+          kport <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-full bg-deno-success text-deno-tertiary">v0.2.2</span>
+        </span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-cyber-textMuted">
-        <a href="#demo" class="hover:text-cyber-neonBlue transition-colors">Interactive Demo</a>
-        <a href="#features" class="hover:text-cyber-neonBlue transition-colors">Features</a>
-        <a href="#benchmarks" class="hover:text-cyber-neonBlue transition-colors">Benchmarks</a>
-        <a href="#install" class="hover:text-cyber-neonBlue transition-colors">Install</a>
-        <a href="docs.html" class="hover:text-white text-cyber-neonBlue font-semibold flex items-center gap-1.5 transition-colors">
-          <span>Docs</span>
-          <i data-lucide="book-open" class="w-4 h-4"></i>
-        </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-deno-muted">
+        <a href="#features" class="hover:text-deno-on-surface transition-colors">Features</a>
+        <a href="#terminal-demo" class="hover:text-deno-on-surface transition-colors">Live TUI</a>
+        <a href="#benchmarks" class="hover:text-deno-on-surface transition-colors">Benchmarks</a>
+        <a href="#install" class="hover:text-deno-on-surface transition-colors">Install</a>
+        <a href="docs.html" class="hover:text-deno-on-surface font-semibold text-deno-primary-strong transition-colors">Docs 📖</a>
       </nav>
 
       <div class="flex items-center gap-3">
         <a href="https://github.com/neuralshyam/kport" target="_blank" 
-           class="h-9 px-4 rounded-lg bg-cyber-card border border-cyber-border text-white hover:border-cyber-neonBlue/50 hover:bg-cyber-cardHover transition-all flex items-center gap-2 text-xs font-mono">
+           class="h-[38px] px-4 rounded-full bg-[#2D3136] text-deno-neutral hover:bg-[#3D4248] transition-all flex items-center gap-2 text-sm font-medium">
           <i data-lucide="github" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">neuralshyam/kport</span>
-          <span class="px-1.5 py-0.2 rounded bg-white/10 text-cyber-neonYellow">★ Star</span>
+          <span>GitHub</span>
+          <span class="text-xs font-mono px-1.5 py-0.5 rounded-full bg-white/10 text-deno-secondary">⭐ Star</span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- ==================== HERO SECTION ==================== -->
-  <section class="relative pt-20 pb-24 px-6 overflow-hidden">
-    <!-- Ambient Radial Glows -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-cyber-neonBlue/15 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-cyber-neonPurple/10 blur-[100px] rounded-full pointer-events-none"></div>
+  <!-- ==================== HERO SECTION (DENO DARK HERO) ==================== -->
+  <section class="relative bg-deno-hero text-deno-neutral pt-16 pb-28 px-6 overflow-hidden border-b border-[#1E252E]">
+    <!-- Ambient Glow -->
+    <div class="absolute inset-0 glow-accent pointer-events-none"></div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10">
       
-      <!-- Script Handwritten Accent Pill -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyber-card border border-cyber-border mb-8 shadow-glow">
-        <span class="text-cyber-neonGreen animate-pulse">●</span>
-        <span class="text-xs text-cyber-textMuted font-mono">Sub-millisecond socket slayer</span>
-        <span class="text-cyber-borderLight">|</span>
-        <span class="text-xs text-cyber-neonBlue playwrite-badge font-normal italic">handcrafted in rust</span>
+      <!-- Mascot with Subtle Ambient Glow -->
+      <div class="inline-block mb-6 relative">
+        <div class="absolute inset-0 bg-deno-primary/20 blur-xl rounded-full"></div>
+        <img src="assets/logo-128.png" alt="port-killer mascot" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
       </div>
 
-      <!-- Hero Headline with Playwrite Accent -->
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-white mb-6">
-        Stop wrestling with <br class="hidden sm:inline" />
-        <span class="playwrite-badge font-normal text-cyber-neonYellow mr-2">stubborn</span>
-        <span class="shimmer-text">network ports.</span>
+      <!-- Clean Headline Display -->
+      <h1 class="text-4xl sm:text-6xl lg:text-[68px] font-bold tracking-display leading-[1.25] text-deno-neutral mb-6">
+        The intelligent port hunter <br class="hidden sm:inline" />
+        & process <span class="text-deno-primary">slayer.</span>
       </h1>
 
-      <!-- Body Lead -->
-      <p class="text-base sm:text-xl text-cyber-textMuted max-w-2xl mx-auto font-normal leading-relaxed mb-10">
-        Say goodbye to <code class="text-cyber-neonBlue bg-cyber-card px-2.5 py-1 rounded-md text-sm font-mono border border-cyber-border">kill -9 </code>. 
-        Auto-identify <span class="text-white font-medium">Next.js, Vite & Postgres</span>, probe live latencies, and slay port blockers in &lt;2ms.
+      <!-- Body Copy -->
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-normal leading-relaxed mb-10">
+        Never run <code class="text-deno-primary bg-[#19222D] px-2 py-0.5 rounded text-sm font-mono">kill -9 $(lsof -t -i:3000)</code> again. 
+        Auto-detect Next.js, Vite & Postgres projects, probe HTTP latency, and kill ports gracefully in &lt;2ms.
       </p>
 
-      <!-- CTA Buttons & Quick Bunx Copy -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-        <div class="flex items-center bg-cyber-dark border border-cyber-border hover:border-cyber-neonBlue/60 rounded-xl p-1.5 shadow-glow transition-all max-w-md w-full sm:w-auto">
-          <div class="flex items-center gap-2 px-3 font-mono text-xs sm:text-sm text-cyber-textMain overflow-x-auto">
-            <span class="text-cyber-neonGreen select-none">$</span>
-            <span id="hero-cmd">bunx @neuralshyam/kport 3000</span>
-          </div>
-          <button onclick="copyHeroCmd()" class="px-4 py-2 rounded-lg bg-cyber-neonBlue text-cyber-black font-bold text-xs hover:bg-white transition-all flex items-center gap-1.5 flex-shrink-0">
-            <i data-lucide="copy" class="w-3.5 h-3.5" id="hero-copy-icon"></i>
-            <span id="hero-copy-text">Copy</span>
-          </button>
-        </div>
-
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+        <a href="#install" 
+           class="h-[46px] px-6 rounded-md bg-deno-primary text-deno-tertiary font-bold text-base flex items-center gap-2 hover:bg-deno-secondary transition-all shadow-lg shadow-deno-primary/20">
+          <i data-lucide="terminal" class="w-4 h-4"></i>
+          <span>Get Started</span>
+        </a>
         <a href="https://github.com/neuralshyam/kport" target="_blank"
-           class="h-12 px-6 rounded-xl bg-cyber-card border border-cyber-border hover:border-cyber-borderLight text-white font-semibold text-sm flex items-center gap-2 transition-all hover:bg-cyber-cardHover w-full sm:w-auto justify-center">
-          <i data-lucide="terminal" class="w-4 h-4 text-cyber-neonGreen"></i>
-          <span>Explore TUI Mode</span>
+           class="h-[46px] px-6 rounded-full bg-[#2D3136] text-deno-neutral font-medium text-base flex items-center gap-2 hover:bg-[#3C4249] transition-all">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>View Source on GitHub</span>
         </a>
       </div>
 
       <!-- ==================== INTERACTIVE TERMINAL SIMULATOR ==================== -->
-      <div id="demo" class="max-w-4xl mx-auto rounded-2xl bg-cyber-dark border border-cyber-border shadow-2xl text-left overflow-hidden">
-        <!-- Terminal Bar -->
-        <div class="bg-[#0A0E14] px-5 py-3.5 border-b border-cyber-border flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-2.5">
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-3 rounded-full bg-[#FF5F56] inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-[#27C93F] inline-block"></span>
-            </div>
-            <span class="ml-2 text-xs font-mono text-cyber-textMuted">kport terminal · <span class="text-cyber-neonGreen">interactive live simulation</span></span>
+      <div id="terminal-demo" class="max-w-4xl mx-auto rounded-lg bg-deno-hero-card border border-[#232C37] shadow-2xl text-left overflow-hidden">
+        <!-- Terminal Header -->
+        <div class="bg-[#0E1318] px-4 py-3 border-b border-[#232C37] flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-[#FF5F56] inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-[#27C93F] inline-block"></span>
+            <span class="ml-2 text-xs font-mono text-gray-500">kport · interactive terminal v0.2.2</span>
           </div>
-
-          <!-- Interactive Tabs -->
-          <div class="flex items-center gap-1 text-xs font-mono bg-cyber-card p-1 rounded-lg border border-cyber-border">
-            <button onclick="switchTerminal('tui')" id="tab-tui" class="px-3 py-1 rounded-md bg-cyber-neonBlue text-cyber-black font-bold transition-all">TUI Mode</button>
-            <button onclick="switchTerminal('probe')" id="tab-probe" class="px-3 py-1 rounded-md text-cyber-textMuted hover:text-white transition-all">Live Probe</button>
-            <button onclick="switchTerminal('range')" id="tab-range" class="px-3 py-1 rounded-md text-cyber-textMuted hover:text-white transition-all">Ranges / Presets</button>
-            <button onclick="switchTerminal('exec')" id="tab-exec" class="px-3 py-1 rounded-md text-cyber-textMuted hover:text-white transition-all">Kill & Exec</button>
+          <!-- Terminal Tabs -->
+          <div class="flex items-center gap-1 text-xs font-mono">
+            <button onclick="switchTerminal('tui')" id="tab-tui" class="px-3 py-1 rounded bg-[#1F2937] text-deno-primary font-semibold hover:text-white transition-colors">TUI</button>
+            <button onclick="switchTerminal('probe')" id="tab-probe" class="px-3 py-1 rounded text-gray-400 hover:text-white transition-colors">Probe</button>
+            <button onclick="switchTerminal('range')" id="tab-range" class="px-3 py-1 rounded text-gray-400 hover:text-white transition-colors">Range</button>
+            <button onclick="switchTerminal('exec')" id="tab-exec" class="px-3 py-1 rounded text-gray-400 hover:text-white transition-colors">Exec</button>
           </div>
         </div>
 
-        <!-- Terminal Body -->
-        <div class="p-6 font-mono text-xs sm:text-sm leading-relaxed min-h-[320px] bg-[#0A0E14]/95 overflow-x-auto terminal-scroll">
+        <!-- Terminal Content Panes -->
+        <div class="p-5 font-mono text-sm leading-relaxed overflow-x-auto min-h-[290px]">
           
-          <!-- Pane 1: TUI Mode -->
-          <div id="view-tui" class="block space-y-2">
-            <div class="flex items-center justify-between text-cyber-neonGreen font-bold border-b border-cyber-border/60 pb-2">
-              <span>⚡ KPORT v0.2.2 [Active Listening Ports: 4]</span>
-              <span class="text-[11px] text-cyber-textMuted font-normal hidden sm:inline">Memory: 412 MB · Kernel: Procfs</span>
-            </div>
-            
-            <div class="text-cyber-textMuted text-xs mb-3 flex items-center gap-2">
-              <span>Filter:</span>
-              <span class="text-cyber-neonBlue bg-cyber-card px-2 py-0.5 rounded border border-cyber-border">/ next</span>
-              <span class="text-gray-500 italic text-[11px]">(1 match found)</span>
-            </div>
-
-            <!-- Table Header -->
-            <div class="grid grid-cols-12 text-cyber-textMuted font-bold border-b border-cyber-border/40 pb-1.5 px-2 text-[11px] uppercase tracking-wider">
-              <div class="col-span-2 text-cyber-neonBlue">PORT</div>
+          <!-- View: TUI Dashboard -->
+          <div id="view-tui" class="block space-y-1">
+            <div class="text-deno-success font-bold mb-2">⚡ KPORT v0.2.2 [Active Ports: 4]</div>
+            <div class="text-gray-400 mb-3 border-b border-gray-800 pb-2">Search: / <span class="text-deno-primary">next</span></div>
+            <div class="grid grid-cols-12 text-gray-500 font-bold border-b border-gray-800 pb-1 mb-2">
+              <div class="col-span-2 text-deno-primary">PORT</div>
               <div class="col-span-2">PROTO</div>
               <div class="col-span-2">PID</div>
               <div class="col-span-3">PROCESS</div>
-              <div class="col-span-3 text-right">DETECTED STACK</div>
+              <div class="col-span-3 text-right">FRAMEWORK</div>
             </div>
-
-            <!-- Row 1 Selected -->
-            <div class="grid grid-cols-12 bg-cyber-neonBlue/15 text-white p-2 rounded-lg font-semibold border-l-4 border-cyber-neonBlue items-center transition-all">
-              <div class="col-span-2 text-cyber-neonBlue font-bold flex items-center gap-1">
-                <span>❯</span> :3000
-              </div>
+            <div class="grid grid-cols-12 bg-[#172333] text-white p-1 rounded font-semibold border-l-2 border-deno-primary mb-1">
+              <div class="col-span-2 text-deno-primary font-bold">❯ :3000</div>
               <div class="col-span-2 text-gray-400">TCP</div>
-              <div class="col-span-2 text-cyber-neonPurple">14205</div>
-              <div class="col-span-3 text-white flex items-center gap-1.5">
-                <span>bun</span>
-                <span class="text-[10px] text-cyber-textMuted font-normal">(/app)</span>
-              </div>
-              <div class="col-span-3 text-right text-cyber-neonGreen font-bold">[Next.js v15.2]</div>
+              <div class="col-span-2 text-purple-400">14205</div>
+              <div class="col-span-3 text-white">bun</div>
+              <div class="col-span-3 text-right text-deno-success font-bold">[Next.js v15]</div>
             </div>
-
-            <!-- Row 2 -->
-            <div class="grid grid-cols-12 text-cyber-textMuted p-2 hover:bg-cyber-card/40 rounded-lg items-center transition-all">
-              <div class="col-span-2 text-cyber-neonYellow">  :5173</div>
+            <div class="grid grid-cols-12 text-gray-300 p-1 mb-1">
+              <div class="col-span-2 text-yellow-400">  :5173</div>
               <div class="col-span-2 text-gray-500">TCP</div>
-              <div class="col-span-2 text-cyber-neonPurple">18902</div>
+              <div class="col-span-2 text-purple-400">18902</div>
               <div class="col-span-3 text-gray-300">node</div>
-              <div class="col-span-3 text-right text-cyber-neonBlue font-medium">[Vite / React]</div>
+              <div class="col-span-3 text-right text-deno-secondary">[Vite / React]</div>
             </div>
-
-            <!-- Row 3 -->
-            <div class="grid grid-cols-12 text-cyber-textMuted p-2 hover:bg-cyber-card/40 rounded-lg items-center transition-all">
+            <div class="grid grid-cols-12 text-gray-300 p-1 mb-1">
               <div class="col-span-2 text-cyan-400">  :5432</div>
               <div class="col-span-2 text-gray-500">TCP</div>
-              <div class="col-span-2 text-cyber-neonPurple">3012</div>
+              <div class="col-span-2 text-purple-400">3012</div>
               <div class="col-span-3 text-gray-300">postgres</div>
-              <div class="col-span-3 text-right text-cyber-neonPurple font-medium">[PostgreSQL 16]</div>
+              <div class="col-span-3 text-right text-deno-primary">[PostgreSQL 16]</div>
             </div>
-
-            <!-- TUI Action Footer -->
-            <div class="mt-5 pt-3 border-t border-cyber-border/60 text-[11px] text-cyber-textMuted flex flex-wrap gap-4 items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span><kbd class="px-1.5 py-0.5 bg-cyber-card border border-cyber-border rounded text-white font-bold">↑/↓</kbd> Move</span>
-                <span><kbd class="px-1.5 py-0.5 bg-cyber-card border border-cyber-border rounded text-white font-bold">/</kbd> Search</span>
-                <span><kbd class="px-1.5 py-0.5 bg-cyber-card border border-cyber-border rounded text-cyber-neonGreen font-bold">p</kbd> Probe</span>
-                <span><kbd class="px-1.5 py-0.5 bg-cyber-card border border-cyber-border rounded text-cyber-neonYellow font-bold">Space</kbd> Select</span>
-              </div>
-              <div>
-                <span><kbd class="px-2 py-0.5 bg-cyber-neonRed/20 border border-cyber-neonRed/40 rounded text-cyber-neonRed font-bold">Enter</kbd> Kill Gracefully (SIGTERM)</span>
-              </div>
+            <div class="mt-4 pt-3 border-t border-gray-800 text-[11px] text-gray-400 flex flex-wrap gap-3">
+              <span><b class="text-white">[↑/↓]</b> Navigate</span>
+              <span><b class="text-white">[/]</b> Search</span>
+              <span><b class="text-deno-success">[p]</b> Live Probe</span>
+              <span><b class="text-yellow-400">[Space]</b> Select</span>
+              <span><b class="text-red-400">[Enter]</b> Kill (SIGTERM)</span>
+              <span><b class="text-red-500">[K]</b> Force (SIGKILL)</span>
             </div>
           </div>
 
-          <!-- Pane 2: Live Probe -->
-          <div id="view-probe" class="hidden space-y-2">
-            <div class="text-cyber-textMuted mb-2">$ kport probe 3000</div>
-            <div class="p-4 rounded-xl bg-cyber-card border border-cyber-border">
-              <div class="text-cyber-neonBlue font-bold text-sm mb-2 flex items-center gap-2">
-                <i data-lucide="activity" class="w-4 h-4"></i>
-                <span>LIVE SOCKET & HTTP PROBE REPORT: :3000</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div><span class="text-cyber-textMuted">TCP Listener:</span> <span class="text-cyber-neonGreen font-bold">OPEN (Bound :::3000)</span></div>
-                <div><span class="text-cyber-textMuted">Roundtrip Latency:</span> <span class="text-cyber-neonBlue font-bold">0.82 ms ⚡</span></div>
-                <div><span class="text-cyber-textMuted">HTTP Status:</span> <span class="text-cyber-neonGreen font-bold">HTTP/1.1 200 OK</span></div>
-                <div><span class="text-cyber-textMuted">Server Header:</span> <span class="text-white">Next.js (Vercel Core)</span></div>
-                <div class="sm:col-span-2"><span class="text-cyber-textMuted">Parsed HTML Title:</span> <span class="text-cyber-neonYellow italic">"Acme Cloud Portal · Dashboard & Analytics"</span></div>
-              </div>
-            </div>
-            <div class="text-cyber-neonGreen text-xs mt-3">✓ Zero browser overhead · Health check completed in 1.2ms</div>
+          <!-- View 2: Probe -->
+          <div id="view-probe" class="hidden">
+            <div class="text-gray-400 mb-2">$ kport probe 3000</div>
+            <div class="text-deno-primary font-bold mb-1">🔍 PROBE REPORT: Port 3000</div>
+            <div class="text-gray-600 mb-2">──────────────────────────────────────────────────</div>
+            <div class="text-gray-300">  TCP Sockets:  <span class="text-deno-success font-bold">OPEN (Active Listener)</span></div>
+            <div class="text-gray-300">  Latency:      <span class="text-deno-primary font-bold">0.82 ms</span></div>
+            <div class="text-gray-300">  HTTP Status:  <span class="text-deno-success font-bold">HTTP/1.1 200 OK</span></div>
+            <div class="text-gray-300">  Server:       <span class="text-white">Next.js (Vercel)</span></div>
+            <div class="text-gray-300">  HTML Title:   <span class="text-deno-secondary italic">"Acme Cloud Dashboard · Home"</span></div>
+            <div class="mt-4 text-deno-success">✓ Health check completed in 1.4ms</div>
           </div>
 
-          <!-- Pane 3: Ranges & Presets -->
-          <div id="view-range" class="hidden space-y-2">
-            <div class="text-cyber-textMuted">$ kport 3000..3005 :db</div>
-            <div class="text-xs text-cyber-textMain my-2">
-              ⚡ Resolved target pattern: <span class="text-cyber-neonBlue font-bold">3000, 3001, 3002, 3003, 3004, 3005, 5432, 6379, 3306</span>
-            </div>
-            <div class="space-y-1.5 text-xs">
-              <div class="text-gray-300">⚡ Slaying 'bun (Next.js)' (<span class="text-cyber-neonPurple">PID 14205</span>) on port :3000... <span class="text-cyber-neonGreen font-bold">✓ SIGTERM Released</span></div>
-              <div class="text-gray-300">⚡ Slaying 'postgres' (<span class="text-cyber-neonPurple">PID 3012</span>) on port :5432... <span class="text-cyber-neonGreen font-bold">✓ Released</span></div>
-              <div class="text-gray-300">⚡ Slaying 'redis-server' (<span class="text-cyber-neonPurple">PID 2890</span>) on port :6379... <span class="text-cyber-neonGreen font-bold">✓ Released</span></div>
-            </div>
-            <div class="mt-4 text-cyber-neonGreen text-xs font-semibold">✓ Successfully freed 3 port listeners in 2.1ms total execution time</div>
+          <!-- View 3: Ranges & Presets -->
+          <div id="view-range" class="hidden">
+            <div class="text-gray-400 mb-1">$ kport 3000..3005 :db</div>
+            <div class="text-gray-300">⚡ Resolved targets: <span class="text-deno-primary font-bold">3000, 3001, 3002, 3003, 3004, 3005, 5432, 6379</span></div>
+            <div class="text-gray-400 my-2">──────────────────────────────────────────────────</div>
+            <div class="text-gray-300">⚡ Killing 'bun (Next.js)' (<span class="text-purple-400">PID 14205</span>) on port :3000... <span class="text-deno-success font-bold">✓ Done</span></div>
+            <div class="text-gray-300">⚡ Killing 'postgres' (<span class="text-purple-400">PID 3012</span>) on port :5432... <span class="text-deno-success font-bold">✓ Done</span></div>
+            <div class="text-gray-300">⚡ Killing 'redis-server' (<span class="text-purple-400">PID 2890</span>) on port :6379... <span class="text-deno-success font-bold">✓ Done</span></div>
+            <div class="mt-3 text-deno-success">✓ Successfully freed 3 port listeners in 2.1ms</div>
           </div>
 
-          <!-- Pane 4: Kill & Exec -->
-          <div id="view-exec" class="hidden space-y-2">
-            <div class="text-cyber-textMuted">$ kport 3000 --exec "bun dev"</div>
-            <div class="text-gray-300 text-xs">⚡ Freeing port :3000... <span class="text-cyber-neonGreen font-bold">✓ Socket Released (0.3ms)</span></div>
-            <div class="p-3 bg-cyber-card border border-cyber-border rounded-lg text-xs mt-2">
-              <div class="text-cyber-neonBlue font-bold mb-1">🚀 Executing: bun dev</div>
-              <div class="text-gray-400">$ bun --hot run src/index.ts</div>
-              <div class="text-cyber-neonGreen font-bold mt-1">✓ Server ready on http://localhost:3000</div>
-            </div>
+          <!-- View 4: Kill & Exec -->
+          <div id="view-exec" class="hidden">
+            <div class="text-gray-400 mb-1">$ kport 3000 --exec "bun dev"</div>
+            <div class="text-gray-300">⚡ Freeing port 3000... <span class="text-deno-success font-bold">✓ Socket Released (0.4ms)</span></div>
+            <div class="text-deno-primary font-bold mt-2">🚀 Executing: bun dev</div>
+            <div class="text-gray-400 my-1">──────────────────────────────────────────────────</div>
+            <div class="text-white">$ bun --hot run src/index.ts</div>
+            <div class="text-deno-success">✓ Server running on http://localhost:3000</div>
           </div>
 
         </div>
@@ -388,34 +325,34 @@
     </div>
   </section>
 
-  <!-- ==================== INSTALL MATRIX BAR ==================== -->
-  <section id="install" class="py-16 bg-cyber-dark/60 border-y border-cyber-border px-6">
+  <!-- ==================== MULTI-PACKAGE MANAGER INSTALL BAR ==================== -->
+  <section id="install" class="py-16 bg-deno-surface border-b border-deno-border px-6">
     <div class="max-w-4xl mx-auto">
       
       <div class="text-center mb-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Install anywhere in one second.</h2>
-        <p class="text-cyber-textMuted text-xs sm:text-sm">Available across all major package ecosystems with zero external dependencies.</p>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-headMd text-deno-on-surface mb-2">Install anywhere in seconds.</h2>
+        <p class="text-deno-muted text-sm sm:text-base">Available across all major package registries with zero native dependencies required.</p>
       </div>
 
-      <!-- Tabbed Installer -->
-      <div class="bg-cyber-card border border-cyber-border rounded-xl p-3 shadow-glowCard">
-        <div class="flex items-center gap-2 border-b border-cyber-border/70 pb-2.5 overflow-x-auto terminal-scroll">
-          <button onclick="setInstallTab('bunx')" id="inst-bunx" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-bold bg-cyber-neonBlue text-cyber-black">bunx / npx</button>
-          <button onclick="setInstallTab('cargo')" id="inst-cargo" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white">cargo</button>
-          <button onclick="setInstallTab('brew')" id="inst-brew" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white">homebrew</button>
-          <button onclick="setInstallTab('dnf')" id="inst-dnf" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white">fedora (dnf)</button>
-          <button onclick="setInstallTab('aur')" id="inst-aur" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white">arch (aur)</button>
-          <button onclick="setInstallTab('curl')" id="inst-curl" class="px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white">curl</button>
+      <!-- Package Manager Tabs -->
+      <div class="bg-deno-neutral border border-deno-border rounded-lg shadow-sm overflow-hidden p-2">
+        <div class="flex items-center gap-2 border-b border-deno-border pb-2 px-2 overflow-x-auto">
+          <button onclick="setInstallTab('bunx')" id="inst-bunx" class="px-4 py-2 rounded-md font-mono font-semibold text-sm bg-deno-primary text-deno-tertiary">bunx / npx</button>
+          <button onclick="setInstallTab('cargo')" id="inst-cargo" class="px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black">cargo</button>
+          <button onclick="setInstallTab('brew')" id="inst-brew" class="px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black">brew</button>
+          <button onclick="setInstallTab('dnf')" id="inst-dnf" class="px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black">fedora (dnf)</button>
+          <button onclick="setInstallTab('aur')" id="inst-aur" class="px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black">aur (yay)</button>
+          <button onclick="setInstallTab('curl')" id="inst-curl" class="px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black">curl</button>
         </div>
 
-        <!-- Command Strip -->
-        <div class="flex items-center justify-between p-3.5 bg-cyber-black rounded-lg font-mono text-xs sm:text-sm mt-3 border border-cyber-border">
+        <!-- Command Box -->
+        <div class="flex items-center justify-between p-4 bg-[#0F141C] text-deno-neutral rounded-md font-mono text-sm mt-2">
           <div class="flex items-center gap-3 overflow-x-auto">
-            <span class="text-cyber-neonGreen select-none">$</span>
+            <span class="text-deno-primary select-none">$</span>
             <span id="install-cmd" class="text-white select-all">bunx @neuralshyam/kport 3000</span>
           </div>
 
-          <button onclick="copyInstallCmd()" class="px-3 py-1.5 rounded-md bg-cyber-card border border-cyber-border text-cyber-neonBlue hover:bg-cyber-neonBlue hover:text-cyber-black transition-all text-xs font-mono font-semibold flex items-center gap-1.5 flex-shrink-0">
+          <button onclick="copyInstallCmd()" class="px-3 py-1.5 rounded-md bg-[#252E3B] text-deno-secondary hover:bg-deno-primary hover:text-deno-tertiary transition-all text-xs font-semibold flex items-center gap-1.5">
             <i data-lucide="copy" class="w-3.5 h-3.5" id="copy-icon"></i>
             <span id="copy-text">Copy</span>
           </button>
@@ -425,180 +362,230 @@
     </div>
   </section>
 
-  <!-- ==================== FEATURES GRID ==================== -->
+  <!-- ==================== CORE FEATURES GRID (DENO SYSTEM CARDS) ==================== -->
   <section id="features" class="py-24 px-6 max-w-7xl mx-auto">
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-card border border-cyber-border text-xs font-mono text-cyber-neonGreen mb-3">
-        <span>⚡ ARCHITECTURE DOCTRINE</span>
+      <div class="inline-block px-3 py-1 rounded-full bg-deno-surface border border-deno-border text-xs font-bold uppercase tracking-wider text-deno-muted mb-3">
+        Engineered for Developers
       </div>
-      <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4">
-        Engineered for speed & safety.
+      <h2 class="text-3xl sm:text-5xl font-bold tracking-headLg text-deno-on-surface mb-4">
+        Every tool you need to master your ports.
       </h2>
-      <p class="text-cyber-textMuted text-base">
-        A bespoke Rust CLI designed from the ground up to replace clunky legacy bash pipelines.
+      <p class="text-deno-muted text-base sm:text-lg">
+        Designed for frontend engineers, backend systems developers, and DevOps teams who value speed, safety, and pristine developer ergonomics.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- Feature 1 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonBlue/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonBlue text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 1 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           ⚡
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonBlue transition-colors">Direct Kernel Procfs Reader</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Bypasses sluggish process table scanners. Directly parses Linux <code class="text-cyber-neonBlue bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">/proc/net</code> & macOS sockets for sub-millisecond discoveries.
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Sub-Millisecond Engine</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Parses kernel socket tables directly (<code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">/proc/net</code> on Linux, <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">lsof/libproc</code> on macOS, <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">iphlpapi</code> on Win32).
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Zero subshell overhead →</span>
       </div>
 
-      <!-- Feature 2 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonGreen/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonGreen text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 2 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           🧠
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonGreen transition-colors">Framework & Project CWD</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Inspects process working directory and manifests to identify whether port 3000 is <span class="text-white font-medium">Next.js, Vite, NestJS, Postgres, or Redis</span>.
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Framework & CWD Detection</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Never wonder which project is hogging port 3000. Inspects <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">package.json</code> and CWD to tag Next.js, Vite, NestJS, Postgres, and Redis.
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Deep monorepo inspection →</span>
       </div>
 
-      <!-- Feature 3 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonPurple/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonPurple text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 3 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           🩺
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonPurple transition-colors">Instant HTTP & Latency Prober</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Test any socket with <code class="text-cyber-neonPurple bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">kport probe 3000</code> or press <kbd class="px-1.5 py-0.5 bg-cyber-dark rounded text-xs">p</kbd> in TUI to inspect headers, response latency & title.
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Live HTTP/TCP Prober</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Run <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">kport probe 3000</code> or tap <kbd class="px-1.5 py-0.5 bg-gray-100 border rounded text-xs">p</kbd> in TUI to verify HTTP status, response latency, server headers, and page titles.
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Instant health check →</span>
       </div>
 
-      <!-- Feature 4 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonYellow/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonYellow text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 4 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           🎯
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonYellow transition-colors">Ranges, Wildcards & Presets</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Slay entire microservice fleets with <code class="text-cyber-neonYellow bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">3000..3010</code>, prefixes with <code class="text-cyber-neonYellow bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">80*</code>, or presets <code class="text-cyber-neonYellow bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">:dev</code> and <code class="text-cyber-neonYellow bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">:db</code>.
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Ranges & Wildcards</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Kill microservice ranges with <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">3000..3010</code>, wildcards with <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">80*</code>, or common presets like <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">:dev</code> and <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">:db</code>.
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Batch operations in 1 keystroke →</span>
       </div>
 
-      <!-- Feature 5 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonRed/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonRed text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 5 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           🧟
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonRed transition-colors">Zombie Orphan Sweeper</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Sweep and terminate abandoned background daemons whose parent terminals or IDEs died (<code class="text-cyber-neonRed bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">PPID == 1</code>) with <code class="text-cyber-neonRed bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">kport --zombies</code>.
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Zombie Process Sweeper</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Detect and terminate orphaned background processes whose parent terminals or IDEs crashed (<code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">PPID == 1</code>) with <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">kport --zombies</code>.
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Reclaim leaked memory →</span>
       </div>
 
-      <!-- Feature 6 -->
-      <div class="bg-cyber-card border border-cyber-border hover:border-cyber-neonBlue/50 rounded-xl p-7 transition-all hover:-translate-y-1 shadow-glowCard group">
-        <div class="w-12 h-12 rounded-xl bg-cyber-dark border border-cyber-border flex items-center justify-center text-cyber-neonBlue text-xl mb-5 group-hover:scale-110 transition-transform">
+      <!-- Card 6 -->
+      <div class="bg-deno-neutral border border-deno-border rounded-sm p-8 shadow-sm hover:border-deno-primary-strong transition-all">
+        <div class="w-12 h-12 rounded-md bg-deno-surface border border-deno-border flex items-center justify-center text-deno-primary-strong font-bold text-2xl mb-6">
           🛡️
         </div>
-        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyber-neonBlue transition-colors">Safe Graceful Termination</h3>
-        <p class="text-cyber-textMuted text-xs sm:text-sm leading-relaxed">
-          Attempts clean <code class="text-cyber-neonBlue bg-cyber-dark px-1.5 py-0.5 rounded font-mono text-xs">SIGTERM</code> first with timeout before escalating. Prevents accidental termination of vital OS daemons (<code class="text-white font-mono text-xs">sshd</code>, <code class="text-white font-mono text-xs">systemd</code>).
+        <h3 class="text-xl font-bold text-deno-on-surface mb-2">Graceful SIGTERM Escalation</h3>
+        <p class="text-deno-muted text-sm leading-relaxed mb-4">
+          Attempts clean <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">SIGTERM</code> with timeout before escalating to <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">SIGKILL</code>. Protects critical OS daemons (<code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono">sshd, systemd</code>).
         </p>
+        <span class="text-xs font-semibold text-deno-primary-strong">Zero corrupted state →</span>
       </div>
 
     </div>
   </section>
 
-  <!-- ==================== BENCHMARKS ==================== -->
-  <section id="benchmarks" class="py-20 bg-cyber-dark/80 border-y border-cyber-border px-6">
+  <!-- ==================== BENCHMARK COMPARISON ==================== -->
+  <section id="benchmarks" class="py-20 bg-deno-surface border-y border-deno-border px-6">
     <div class="max-w-4xl mx-auto">
+      
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-extrabold text-white mb-2">Blistering benchmark speeds.</h2>
-        <p class="text-cyber-textMuted text-sm">Measured over 50 iterations on Linux with 100+ active network sockets.</p>
+        <h2 class="text-3xl font-bold tracking-headLg text-deno-on-surface mb-3">Engineered for pure speed.</h2>
+        <p class="text-deno-muted text-base">Benchmarked against legacy shell scripts and utility pipelines on 100 active sockets.</p>
       </div>
 
-      <div class="bg-cyber-card border border-cyber-border rounded-xl p-6 sm:p-8 space-y-6">
+      <!-- Graph Card -->
+      <div class="bg-deno-neutral border border-deno-border rounded-md p-8 shadow-sm space-y-6">
         
         <!-- Bar 1: kport -->
         <div>
-          <div class="flex justify-between text-xs sm:text-sm font-bold mb-2">
-            <span class="flex items-center gap-2 text-white">
-              <span class="w-3 h-3 rounded-full bg-cyber-neonBlue"></span>
-              kport (Full Kernel Scan + Framework + CWD)
+          <div class="flex justify-between text-sm font-bold mb-2">
+            <span class="flex items-center gap-2 text-deno-on-surface">
+              <span class="w-3 h-3 rounded-full bg-deno-primary"></span>
+              port-killer / kport (Full scan + Framework + CWD)
             </span>
-            <span class="text-cyber-neonBlue">13.6 ms (2.7x faster than lsof)</span>
+            <span class="text-deno-primary-strong font-mono">13.6 ms (2.7x faster than lsof)</span>
           </div>
-          <div class="w-full h-4 bg-cyber-dark rounded-full overflow-hidden border border-cyber-border">
-            <div class="h-full bg-cyber-neonBlue rounded-full" style="width: 37%;"></div>
+          <div class="w-full h-5 bg-deno-surface rounded-full overflow-hidden border border-deno-border">
+            <div class="h-full bg-deno-primary rounded-full" style="width: 37%;"></div>
           </div>
         </div>
 
         <!-- Bar 2: ss -->
         <div>
-          <div class="flex justify-between text-xs sm:text-sm font-semibold mb-2">
-            <span class="flex items-center gap-2 text-cyber-textMuted">
-              <span class="w-3 h-3 rounded-full bg-gray-500"></span>
+          <div class="flex justify-between text-sm font-semibold mb-2">
+            <span class="flex items-center gap-2 text-deno-muted">
+              <span class="w-3 h-3 rounded-full bg-gray-400"></span>
               ss -tulpn (Socket list only, C / iproute2)
             </span>
-            <span class="text-cyber-textMuted">15.7 ms</span>
+            <span class="text-deno-muted font-mono">15.7 ms</span>
           </div>
-          <div class="w-full h-4 bg-cyber-dark rounded-full overflow-hidden border border-cyber-border">
-            <div class="h-full bg-gray-500 rounded-full" style="width: 43%;"></div>
+          <div class="w-full h-5 bg-deno-surface rounded-full overflow-hidden border border-deno-border">
+            <div class="h-full bg-gray-400 rounded-full" style="width: 43%;"></div>
           </div>
         </div>
 
         <!-- Bar 3: lsof -->
         <div>
-          <div class="flex justify-between text-xs sm:text-sm font-semibold mb-2">
-            <span class="flex items-center gap-2 text-cyber-textMuted">
-              <span class="w-3 h-3 rounded-full bg-gray-600"></span>
+          <div class="flex justify-between text-sm font-semibold mb-2">
+            <span class="flex items-center gap-2 text-deno-muted">
+              <span class="w-3 h-3 rounded-full bg-gray-300"></span>
               lsof -iTCP -sTCP:LISTEN
             </span>
-            <span class="text-cyber-textMuted">36.6 ms</span>
+            <span class="text-deno-muted font-mono">36.6 ms</span>
           </div>
-          <div class="w-full h-4 bg-cyber-dark rounded-full overflow-hidden border border-cyber-border">
-            <div class="h-full bg-gray-600 rounded-full" style="width: 100%;"></div>
+          <div class="w-full h-5 bg-deno-surface rounded-full overflow-hidden border border-deno-border">
+            <div class="h-full bg-gray-300 rounded-full" style="width: 100%;"></div>
           </div>
         </div>
 
-        <div class="pt-4 border-t border-cyber-border flex flex-wrap justify-between text-xs text-cyber-textMuted gap-2 font-mono">
-          <span>Single Port Lookup: <b class="text-white">~2.8ms</b></span>
-          <span>Binary Size: <b class="text-white">&lt;2.1MB</b></span>
-          <span>Cold Startup: <b class="text-white">&lt;500µs</b></span>
+        <div class="pt-4 border-t border-deno-border flex flex-wrap justify-between text-xs text-deno-muted gap-2 font-mono">
+          <span>Single Port Lookup: ~2.8ms</span>
+          <span>Binary Footprint: &lt;2.1MB</span>
+          <span>Startup Time: &lt;500µs</span>
         </div>
       </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== MONOREPO CONFIG SECTION ==================== -->
+  <section id="monorepo" class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      <div>
+        <div class="inline-block px-3 py-1 rounded-full bg-deno-surface border border-deno-border text-xs font-bold uppercase tracking-wider text-deno-muted mb-4">
+          Team Workflow Automation
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-headLg text-deno-on-surface mb-4">
+          One config file to rule your workspace.
+        </h2>
+        <p class="text-deno-muted text-base leading-relaxed mb-6">
+          Drop a <code class="bg-deno-surface px-1.5 py-0.5 rounded text-xs font-mono text-black font-semibold">kport.toml</code> into your monorepo root. Everyone on the team can reset all dev ports before starting work with a single command.
+        </p>
+
+        <div class="space-y-3 font-mono text-xs sm:text-sm">
+          <div class="p-3 bg-deno-surface border border-deno-border rounded-md">
+            <span class="text-deno-primary-strong font-bold">kport reset</span>
+            <span class="text-deno-muted ml-2"># Instantly frees frontend, backend, postgres & redis</span>
+          </div>
+          <div class="p-3 bg-deno-surface border border-deno-border rounded-md">
+            <span class="text-deno-primary-strong font-bold">kport status</span>
+            <span class="text-deno-muted ml-2"># Displays UP/DOWN status for all configured services</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Config Preview Box -->
+      <div class="bg-[#0B0F14] text-deno-neutral p-6 rounded-lg border border-[#232C37] shadow-xl font-mono text-xs sm:text-sm">
+        <div class="text-gray-500 mb-2"># kport.toml</div>
+        <div class="text-deno-primary font-bold">[services]</div>
+        <div class="text-gray-300">frontend  = <span class="text-yellow-400">3000</span></div>
+        <div class="text-gray-300">backend   = <span class="text-yellow-400">8000</span></div>
+        <div class="text-gray-300">database  = <span class="text-yellow-400">5432</span></div>
+        <div class="text-gray-300">redis     = <span class="text-yellow-400">6379</span></div>
+        <div class="text-gray-300">storybook = <span class="text-yellow-400">6006</span></div>
+      </div>
+
     </div>
   </section>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-cyber-black border-t border-cyber-border py-12 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-cyber-textMuted">
+  <footer class="bg-deno-surface border-t border-deno-border py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-deno-muted">
       
       <div class="flex items-center gap-3">
         <img src="assets/logo-128.png" alt="kport logo" class="w-6 h-6 rounded object-cover">
-        <span class="font-bold text-white">kport</span>
-        <span>· Dual-licensed under MIT & Apache-2.0</span>
+        <span class="font-bold text-deno-on-surface">kport</span>
+        <span>· Released under MIT / Apache-2.0</span>
       </div>
 
-      <div class="text-center">
-        Crafted with pure Rust 🦀 by <a href="https://shyamcharan.pages.dev/" target="_blank" rel="author" class="font-bold text-white hover:text-cyber-neonBlue transition-colors">Shyam Charan Das</a>
+      <div>
+        Crafted with pure Rust 🦀 by <a href="https://shyamcharan.pages.dev/" target="_blank" rel="author" class="font-bold text-deno-on-surface hover:text-deno-primary-strong transition-colors">Shyam Charan Das</a>
       </div>
 
-      <div class="flex items-center gap-6 font-mono">
-        <a href="https://crates.io/crates/kport" target="_blank" class="hover:text-white transition-colors">Crates.io</a>
-        <a href="https://npmjs.com/package/@neuralshyam/kport" target="_blank" class="hover:text-white transition-colors">NPM</a>
-        <a href="https://github.com/neuralshyam/kport" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+      <div class="flex items-center gap-6 font-mono text-xs">
+        <a href="https://crates.io/crates/kport" target="_blank" class="hover:text-black transition-colors">Crates.io</a>
+        <a href="https://npmjs.com/package/@neuralshyam/kport" target="_blank" class="hover:text-black transition-colors">NPM</a>
+        <a href="https://github.com/neuralshyam/kport" target="_blank" class="hover:text-black transition-colors">GitHub</a>
       </div>
 
     </div>
   </footer>
 
-  <!-- ==================== INTERACTION LOGIC ==================== -->
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
     lucide.createIcons();
 
-    // Terminal Switching
+    // Terminal Tabs
     const views = {
       tui: document.getElementById('view-tui'),
       probe: document.getElementById('view-probe'),
@@ -617,16 +604,18 @@
         if (key === mode) {
           views[key].classList.remove('hidden');
           views[key].classList.add('block');
-          tabs[key].className = 'px-3 py-1 rounded-md bg-cyber-neonBlue text-cyber-black font-bold transition-all';
+          tabs[key].classList.add('bg-[#1F2937]', 'text-deno-primary');
+          tabs[key].classList.remove('text-gray-400');
         } else {
           views[key].classList.remove('block');
           views[key].classList.add('hidden');
-          tabs[key].className = 'px-3 py-1 rounded-md text-cyber-textMuted hover:text-white transition-all';
+          tabs[key].classList.remove('bg-[#1F2937]', 'text-deno-primary');
+          tabs[key].classList.add('text-gray-400');
         }
       });
     }
 
-    // Install Tabs
+    // Package Manager Install Bar
     const installCommands = {
       bunx: 'bunx @neuralshyam/kport 3000',
       cargo: 'cargo install kport',
@@ -642,9 +631,9 @@
       buttons.forEach(b => {
         const btn = document.getElementById('inst-' + b);
         if (b === pkg) {
-          btn.className = 'px-3.5 py-1.5 rounded-lg font-mono text-xs font-bold bg-cyber-neonBlue text-cyber-black';
+          btn.className = 'px-4 py-2 rounded-md font-mono font-semibold text-sm bg-deno-primary text-deno-tertiary';
         } else {
-          btn.className = 'px-3.5 py-1.5 rounded-lg font-mono text-xs font-medium text-cyber-textMuted hover:text-white';
+          btn.className = 'px-4 py-2 rounded-md font-mono font-semibold text-sm text-deno-muted hover:text-black';
         }
       });
     }
@@ -654,16 +643,6 @@
       navigator.clipboard.writeText(cmd);
       const copyText = document.getElementById('copy-text');
       const copyIcon = document.getElementById('copy-icon');
-      copyText.innerText = 'Copied!';
-      setTimeout(() => {
-        copyText.innerText = 'Copy';
-      }, 2000);
-    }
-
-    function copyHeroCmd() {
-      const cmd = document.getElementById('hero-cmd').innerText;
-      navigator.clipboard.writeText(cmd);
-      const copyText = document.getElementById('hero-copy-text');
       copyText.innerText = 'Copied!';
       setTimeout(() => {
         copyText.innerText = 'Copy';
