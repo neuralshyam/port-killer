@@ -1,6 +1,6 @@
 [package]
 name = "kport"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["Shyam Charan Das <neuralshyam@gmail.com>"]
 description = "A blazing-fast, interactive CLI & TUI to hunt down and kill processes hogging your ports."

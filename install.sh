@@ -26,7 +26,7 @@ TARGET="${ARCH_NAME}-${PLATFORM}"
 LATEST_TAG=$(curl -s "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
 if [ -z "$LATEST_TAG" ]; then
-    LATEST_TAG="v0.2.1"
+    LATEST_TAG="v0.2.2"
 fi
 
 URL="https://github.com/${REPO}/releases/download/${LATEST_TAG}/port-killer-${TARGET}.tar.gz"
