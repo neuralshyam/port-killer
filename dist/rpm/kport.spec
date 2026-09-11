@@ -8,7 +8,7 @@ Summary:        ⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging
 
 License:        MIT OR Apache-2.0
 URL:            https://neuralshyam.github.io/kport/
-Source0:        https://github.com/neuralshyam/kport/releases/download/v%{version}/port-killer-x86_64-unknown-linux-gnu.tar.gz
+Source0:        https://github.com/neuralshyam/kport/releases/download/v%{version}/kport-x86_64-unknown-linux-gnu.tar.gz
 
 ExclusiveArch:  x86_64
 
@@ -22,7 +22,11 @@ to inspect, probe, and slay network port conflicts with zero friction.
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_bindir}
-install -m 0755 port-killer %{buildroot}%{_bindir}/kport
+if [ -f kport ]; then
+    install -m 0755 kport %{buildroot}%{_bindir}/kport
+elif [ -f port-killer ]; then
+    install -m 0755 port-killer %{buildroot}%{_bindir}/kport
+fi
 ln -sf kport %{buildroot}%{_bindir}/port-killer
 
 %files
