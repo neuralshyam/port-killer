@@ -36,7 +36,7 @@
 ## 📸 Terminal Preview
 
 ```text
-┌── ⚡ PORT KILLER v0.2.0 [Active Ports: 4] ──────────────────────────────────────────┐
+┌── ⚡ PORT KILLER v0.2.2 [Active Ports: 4] ──────────────────────────────────────────┐
 │  Search: Press '/' to filter ports, frameworks, or directories...                   │
 ├──────────────────────────────────────┬──────────────────────────────────────────────┤
 │   PORT    PROTO  PID    PROCESS      │  PORT INSPECTOR                              │
