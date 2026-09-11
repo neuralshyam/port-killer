@@ -2,7 +2,7 @@
 %global __os_install_post %{nil}
 
 Name:           kport
-Version:        0.2.0
+Version:        0.2.1
 Release:        1%{?dist}
 Summary:        ⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging network ports
 

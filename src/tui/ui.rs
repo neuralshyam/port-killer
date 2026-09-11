@@ -39,7 +39,8 @@ fn render_header(f: &mut Frame, app: &App, area: Rect) {
     };
 
     let title = format!(
-        " ⚡ PORT KILLER v0.2.0 [Active Ports: {}] ",
+        " ⚡ KPORT v{} [Active Ports: {}] ",
+        env!("CARGO_PKG_VERSION"),
         app.filtered_ports.len()
     );
 

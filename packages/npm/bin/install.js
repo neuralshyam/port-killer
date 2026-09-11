@@ -6,7 +6,8 @@ const https = require('https');
 const { execSync } = require('child_process');
 
 const REPO = 'neuralshyam/kport';
-const VERSION = 'v0.2.0';
+const pkg = require('../package.json');
+const VERSION = `v${pkg.version}`;
 
 function getTarget() {
   const os = process.platform;

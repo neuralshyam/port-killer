@@ -21,7 +21,7 @@ use crate::scanner::{find_processes_on_port, scan_ports};
 #[derive(Parser, Debug)]
 #[command(
     name = "kport",
-    version = "0.2.0",
+    version = env!("CARGO_PKG_VERSION"),
     about = "⚡ Ultra-fast CLI & TUI to hunt down and kill processes hogging your ports.",
     long_about = "kport (or port-killer) lets you inspect listening network sockets and immediately terminate blocking processes.\nSupports single ports, ranges (3000..3010), wildcards (80*), presets (:dev, :db), orphan/zombie sweeping, probing, and kport.toml project config."
 )]

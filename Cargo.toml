@@ -1,6 +1,6 @@
 [package]
 name = "kport"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["Shyam Charan Das <neuralshyam@gmail.com>"]
 description = "A blazing-fast, interactive CLI & TUI to hunt down and kill processes hogging your ports."
@@ -34,8 +34,8 @@ extended-description = "A blazing-fast, interactive CLI & TUI to hunt down and k
 section = "utils"
 priority = "optional"
 assets = [
-    ["target/release/port-killer", "usr/bin/", "755"],
-    ["README.md", "usr/share/doc/port-killer/README", "644"],
+    ["target/release/kport", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/kport/README", "644"],
 ]
 
 [profile.release]

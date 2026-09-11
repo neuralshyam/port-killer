@@ -37,8 +37,9 @@ pub fn probe_port(port: u16) -> ProbeResult {
     let _ = stream.set_write_timeout(Some(Duration::from_millis(500)));
 
     let request = format!(
-        "GET / HTTP/1.1\r\nHost: localhost:{}\r\nUser-Agent: kport/0.2.0\r\nAccept: */*\r\nConnection: close\r\n\r\n",
-        port
+        "GET / HTTP/1.1\r\nHost: localhost:{}\r\nUser-Agent: kport/{}\r\nAccept: */*\r\nConnection: close\r\n\r\n",
+        port,
+        env!("CARGO_PKG_VERSION")
     );
 
     if stream.write_all(request.as_bytes()).is_err() {
